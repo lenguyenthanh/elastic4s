@@ -93,6 +93,7 @@ lazy val scala3Settings = allSettings :+ (crossScalaVersions := scalaAllVersions
 lazy val scala3Projects: Seq[ProjectReference] = Seq(
   json_builder,
   domain,
+  smithy4s,
   handlers,
   core,
   clientcore,
@@ -141,6 +142,17 @@ lazy val domain = (project in file("elastic4s-domain"))
   .dependsOn(json_builder)
   .settings(scala3Settings)
   .settings(libraryDependencies ++= fasterXmlJacksonScala)
+
+lazy val smithy4s = (project in file("elastic4s-smithy4s"))
+  .enablePlugins(Smithy4sCodegenPlugin)
+  .settings(name := "elastic4s-smithy4s")
+  .settings(scala3Settings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.disneystreaming.smithy4s" %% "smithy4s-core" % "0.18.28",
+      "com.disneystreaming.smithy4s" %% "smithy4s-json" % "0.18.28"
+    )
+  )
 
 lazy val json_builder = (project in file("elastic4s-json-builder"))
   .settings(name := "elastic4s-json-builder")
