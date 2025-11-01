@@ -207,6 +207,40 @@ Choose `elastic4s-domain` if you:
 - Need full control over implementation details
 - Want to avoid build-time code generation
 
+## Testing
+
+The module includes comprehensive integration tests using **Weaver** test framework and **Testcontainers**.
+
+### Test Framework
+
+Tests use [Weaver](https://disneystreaming.github.io/weaver-test/), a functional test framework that integrates with Cats Effect:
+- Resource-safe test lifecycle management
+- Shared resources across tests (Elasticsearch container + HTTP client)
+- Better composition with IO-based code
+- Built-in support for Cats Effect
+
+### Running Tests
+
+```bash
+# Run all tests
+sbt smithy4s/test
+
+# Run a specific test suite
+sbt "smithy4s/testOnly se.thanh.elastic4s.integration.DocumentOperationsIntegrationTest"
+```
+
+### Test Coverage
+
+- **DocumentOperationsIntegrationTest**: Index, Get, Update, Delete, Count operations
+- **SearchIntegrationTest**: Search queries, aggregations, sorting
+- **BulkOperationsIntegrationTest**: Bulk index and mixed operations
+- **IndexManagementIntegrationTest**: Create, delete, open, close, refresh, stats
+- **ClusterOperationsIntegrationTest**: Cluster health and statistics
+- **AliasOperationsIntegrationTest**: Add/remove and get aliases
+- **Smithy4sTypesTest**: Demonstrates usage of generated types
+
+See [integration/README.md](src/test/scala/se/thanh/elastic4s/integration/README.md) for detailed testing documentation.
+
 ## Generated Code
 
 The Smithy4s plugin generates:

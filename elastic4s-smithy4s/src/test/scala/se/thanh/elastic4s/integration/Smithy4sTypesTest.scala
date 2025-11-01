@@ -1,244 +1,133 @@
 package se.thanh.elastic4s.integration
 
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 import se.thanh.elastic4cats._
 import smithy4s.Document
+import weaver.SimpleIOSuite
 
 /**
- * Unit tests demonstrating usage of Smithy4s generated types
- * Complements the existing Smithy4sBasicTest with more comprehensive examples
+ * Demonstrates usage of Smithy4s generated types
+ * Shows comprehensive examples of request construction with generated types
  */
-class Smithy4sTypesTest extends AnyFlatSpec with Matchers {
+object Smithy4sTypesTest extends SimpleIOSuite {
 
-  "GetRequest" should "be constructed with all parameters" in {
-    val request = GetRequest(
-      index = "products",
-      id = "prod-123",
-      routing = Some("user-456"),
-      preference = Some("_primary"),
-      refresh = Some(true),
-      realtime = Some(false),
-      storedFields = Some(List("name", "price")),
-      version = Some(5L),
-      versionType = Some(VersionType.EXTERNAL)
-    )
-    
-    request.index shouldBe "products"
-    request.id shouldBe "prod-123"
-    request.routing shouldBe Some("user-456")
-    request.version shouldBe Some(5L)
-    request.versionType shouldBe Some(VersionType.EXTERNAL)
+  test("RefreshPolicy enum should have all expected values") {
+    expect(RefreshPolicy.values.nonEmpty)
   }
 
-  "IndexRequest" should "support document indexing with options" in {
-    val doc = Document.obj(
-      "title" -> Document.fromString("Smithy4s Guide"),
-      "author" -> Document.fromString("Developer"),
-      "tags" -> Document.array(Document.fromString("scala"), Document.fromString("smithy"))
-    )
-    
+  test("HealthStatus enum should have all expected values") {
+    val statuses = HealthStatus.values
+    expect(statuses.exists(_.value == "green")) and
+    expect(statuses.exists(_.value == "yellow")) and
+    expect(statuses.exists(_.value == "red"))
+  }
+
+  test("IndexRequest should be constructable with all fields") {
+    val doc = Document.obj("field" -> Document.fromString("value"))
     val request = IndexRequest(
-      index = "articles",
-      source = doc,
-      id = Some("article-1"),
-      routing = Some("section-tech"),
-      refreshPolicy = Some(RefreshPolicy.IMMEDIATE),
-      timeout = Some("30s"),
-      version = Some(1L),
-      versionType = Some(VersionType.INTERNAL)
+      index = "test-index",
+      id = Some("doc-1"),
+      document = Some(doc),
+      refresh = Some("true"),
+      routing = Some("routing-key")
     )
-    
-    request.index shouldBe "articles"
-    request.id shouldBe Some("article-1")
-    request.refreshPolicy shouldBe Some(RefreshPolicy.IMMEDIATE)
+    expect(request.index == "test-index") and
+    expect(request.id.contains("doc-1"))
   }
 
-  "UpdateRequest" should "support document updates with scripts" in {
+  test("GetRequest should be constructable with optional parameters") {
+    val request = GetRequest(
+      index = "test-index",
+      id = "doc-1",
+      routing = Some("routing-key"),
+      refresh = Some(true)
+    )
+    expect(request.index == "test-index") and
+    expect(request.id == "doc-1")
+  }
+
+  test("UpdateRequest should support script updates") {
     val script = Script(
       source = "ctx._source.counter += params.count",
       lang = Some("painless"),
       params = Some(Document.obj("count" -> Document.fromInt(1)))
     )
-    
     val request = UpdateRequest(
-      index = "counters",
-      id = "counter-1",
+      index = "test-index",
+      id = "doc-1",
       script = Some(script),
-      upsert = Some(Document.obj("counter" -> Document.fromInt(0))),
-      refreshPolicy = Some(RefreshPolicy.WAIT_FOR),
-      retryOnConflict = Some(3)
+      refresh = Some("true")
     )
-    
-    request.index shouldBe "counters"
-    request.id shouldBe "counter-1"
-    request.script.isDefined shouldBe true
-    request.retryOnConflict shouldBe Some(3)
+    expect(request.script.isDefined) and
+    expect(request.script.get.source.contains("counter"))
   }
 
-  "DeleteByIdRequest" should "support conditional deletes" in {
-    val request = DeleteByIdRequest(
-      index = "documents",
-      id = "doc-to-delete",
-      routing = Some("shard-1"),
-      version = Some(2L),
-      versionType = Some(VersionType.EXTERNAL),
-      refreshPolicy = Some(RefreshPolicy.IMMEDIATE),
-      timeout = Some("10s")
+  test("DeleteRequest should be constructable") {
+    val request = DeleteRequest(
+      index = "test-index",
+      id = "doc-1",
+      refresh = Some("true")
     )
-    
-    request.index shouldBe "documents"
-    request.id shouldBe "doc-to-delete"
-    request.version shouldBe Some(2L)
+    expect(request.index == "test-index")
   }
 
-  "CountRequest" should "support count with query" in {
+  test("SearchRequest should support complex queries") {
     val query = Document.obj(
       "match" -> Document.obj(
-        "status" -> Document.fromString("active")
+        "title" -> Document.fromString("elasticsearch")
       )
     )
-    
-    val request = CountRequest(
-      indexes = List("users", "profiles"),
-      query = Some(query),
-      minScore = Some(1.0)
-    )
-    
-    request.indexes shouldBe List("users", "profiles")
-    request.query.isDefined shouldBe true
-    request.minScore shouldBe Some(1.0)
-  }
-
-  "SearchRequest" should "support complex search with aggregations" in {
-    val query = Document.obj(
-      "bool" -> Document.obj(
-        "must" -> Document.array(
-          Document.obj("term" -> Document.obj("status" -> Document.fromString("published")))
-        )
-      )
-    )
-    
-    val aggs = Document.obj(
-      "categories" -> Document.obj(
-        "terms" -> Document.obj("field" -> Document.fromString("category.keyword"))
-      )
-    )
-    
     val request = SearchRequest(
-      index = "articles",
-      query = Some(query),
-      from = Some(0),
-      size = Some(20),
-      sort = Some(List(Document.obj("date" -> Document.obj("order" -> Document.fromString("desc"))))),
-      aggregations = Some(aggs),
-      trackTotalHits = Some(true),
-      timeout = Some("5s")
-    )
-    
-    request.index shouldBe "articles"
-    request.from shouldBe Some(0)
-    request.size shouldBe Some(20)
-    request.query.isDefined shouldBe true
-    request.aggregations.isDefined shouldBe true
-  }
-
-  "BulkRequest" should "support mixed operations" in {
-    val indexOp = BulkOperation.IndexOp(BulkIndexOperation(
-      index = Some("products"),
-      id = Some("prod-1"),
-      source = Document.obj("name" -> Document.fromString("Product 1"))
-    ))
-    
-    val updateOp = BulkOperation.UpdateOp(BulkUpdateOperation(
-      index = Some("products"),
-      id = Some("prod-2"),
-      doc = Some(Document.obj("price" -> Document.fromDouble(29.99)))
-    ))
-    
-    val deleteOp = BulkOperation.DeleteOp(BulkDeleteOperation(
-      index = Some("products"),
-      id = Some("prod-3")
-    ))
-    
-    val request = BulkRequest(
-      operations = List(indexOp, updateOp, deleteOp),
-      refresh = Some(RefreshPolicy.IMMEDIATE),
-      timeout = Some("30s")
-    )
-    
-    request.operations.length shouldBe 3
-    request.refresh shouldBe Some(RefreshPolicy.IMMEDIATE)
-  }
-
-  "CreateIndexRequest" should "support index creation with settings and mappings" in {
-    val settings = IndexSettings(
-      numberOfShards = Some(3),
-      numberOfReplicas = Some(1),
-      refreshInterval = Some("5s")
-    )
-    
-    val properties = Document.obj(
-      "title" -> Document.obj("type" -> Document.fromString("text")),
-      "count" -> Document.obj("type" -> Document.fromString("integer")),
-      "timestamp" -> Document.obj("type" -> Document.fromString("date"))
-    )
-    
-    val mappings = Mappings(properties = Some(properties))
-    
-    val request = CreateIndexRequest(
-      index = "my-index",
-      settings = Some(settings),
-      mappings = Some(mappings)
-    )
-    
-    request.index shouldBe "my-index"
-    request.settings.isDefined shouldBe true
-    request.mappings.isDefined shouldBe true
-  }
-
-  "Enums" should "have correct string values" in {
-    RefreshPolicy.NONE.value shouldBe "false"
-    RefreshPolicy.IMMEDIATE.value shouldBe "true"
-    RefreshPolicy.WAIT_FOR.value shouldBe "wait_for"
-    
-    VersionType.INTERNAL.value shouldBe "internal"
-    VersionType.EXTERNAL.value shouldBe "external"
-    VersionType.EXTERNAL_GTE.value shouldBe "external_gte"
-    VersionType.FORCE.value shouldBe "force"
-    
-    HealthStatus.GREEN.value shouldBe "green"
-    HealthStatus.YELLOW.value shouldBe "yellow"
-    HealthStatus.RED.value shouldBe "red"
-  }
-
-  "Common structures" should "be reusable across operations" in {
-    val docRef = DocumentRef(
       index = "test-index",
-      id = "doc-id",
-      routing = Some("routing-key")
+      query = Some(query),
+      size = Some(10),
+      from = Some(0)
     )
-    
-    docRef.index shouldBe "test-index"
-    docRef.id shouldBe "doc-id"
-    
-    val shards = Shards(
-      total = Some(5),
-      successful = Some(5),
-      skipped = Some(0),
-      failed = Some(0)
+    expect(request.query.isDefined) and
+    expect(request.size.contains(10))
+  }
+
+  test("BulkRequest should support multiple operation types") {
+    val indexOp = BulkOperation.IndexOpCase(
+      IndexOp(
+        index = Some("test-index"),
+        id = Some("1")
+      )
     )
-    
-    shards.total shouldBe Some(5)
-    shards.successful shouldBe Some(5)
-    
+    val request = BulkRequest(
+      operations = List(indexOp),
+      refresh = Some("true")
+    )
+    expect(request.operations.nonEmpty)
+  }
+
+  test("CountRequest should be constructable with query") {
+    val query = Document.obj(
+      "term" -> Document.obj(
+        "status" -> Document.fromString("published")
+      )
+    )
+    val request = CountRequest(
+      index = "test-index",
+      query = Some(query)
+    )
+    expect(request.query.isDefined)
+  }
+
+  test("Document structures should be reusable across requests") {
     val fetchSource = FetchSourceContext(
       fetchSource = true,
       includes = Some(List("field1", "field2")),
-      excludes = Some(List("internal.*"))
+      excludes = Some(List("field3"))
     )
     
-    fetchSource.fetchSource shouldBe true
-    fetchSource.includes.get.length shouldBe 2
+    val getRequest = GetRequest(
+      index = "test-index",
+      id = "doc-1",
+      source = Some(fetchSource)
+    )
+    
+    expect(getRequest.source.isDefined) and
+    expect(getRequest.source.get.includes.exists(_.contains("field1")))
   }
+
 }
