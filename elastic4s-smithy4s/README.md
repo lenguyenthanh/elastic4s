@@ -241,3 +241,51 @@ The module covers the following Elasticsearch APIs:
 **Task APIs**: List Tasks, Get Task, Cancel Task
 
 This provides comprehensive coverage of the core Elasticsearch APIs used in most applications.
+
+## Testing
+
+The module includes comprehensive integration tests using Testcontainers for Elasticsearch. The tests demonstrate practical usage of the Smithy4s-generated types and validate functionality against real Elasticsearch instances.
+
+### Test Structure
+
+- **Unit Tests**: Basic type construction and validation (`Smithy4sBasicTest`, `Smithy4sTypesTest`)
+- **Integration Tests**: Full operations tested against Elasticsearch containers
+  - Document operations (Get, Index, Update, Delete, Count)
+  - Search operations (queries, aggregations, sorting)
+  - Bulk operations (mixed operations)
+  - Index management (create, delete, open, close, refresh, stats)
+  - Cluster operations (health, stats)
+  - Alias operations (add, remove, get)
+
+### Running Tests
+
+```bash
+# Run all tests
+sbt "smithy4s/test"
+
+# Run specific test suite
+sbt "smithy4s/testOnly se.thanh.elastic4s.integration.DocumentOperationsIntegrationTest"
+```
+
+### Test Approach
+
+The integration tests use:
+- **Testcontainers**: Automatic Elasticsearch container lifecycle
+- **HTTP4s**: Type-safe HTTP client with Cats Effect
+- **Smithy4s Types**: Generated request/response models
+- **ScalaTest**: Test framework consistent with elastic4s-tests
+
+See `src/test/scala/se/thanh/elastic4s/integration/README.md` for detailed testing documentation.
+
+### Comparison with Legacy Tests
+
+| Aspect | Legacy elastic4s Tests | Smithy4s Tests |
+|--------|------------------------|----------------|
+| Test Framework | ScalaTest + DockerTests | ScalaTest + Testcontainers |
+| Elasticsearch Setup | External/Manual | Automatic (Docker) |
+| API Types | Hand-written models | Smithy4s generated |
+| HTTP Client | elastic4s JavaClient | http4s + Cats Effect |
+| Isolation | Shared instance | Per-suite containers |
+| CI/CD | Requires ES setup | Fully self-contained |
+
+The Smithy4s tests complement the existing elastic4s tests by demonstrating the generated types in action while maintaining the same test coverage.
