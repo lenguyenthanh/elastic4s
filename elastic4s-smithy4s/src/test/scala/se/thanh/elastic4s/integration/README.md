@@ -50,6 +50,27 @@ sbt "smithy4s/testOnly * -- --verbose"
 
 ## Test Suites
 
+There are two types of test suites in this module:
+
+1. **ElasticServiceIntegrationTest**: Tests using the generated ElasticService trait with smithy4s-http4s
+2. **Operation-specific tests**: Tests using manual HTTP requests with generated data types
+
+### ElasticServiceIntegrationTest (NEW)
+**Recommended approach** - Tests the generated ElasticService using smithy4s-http4s integration:
+- Index and Get documents through generated service
+- Search operations with the service interface
+- Update and Delete operations
+- Bulk operations using the service
+- Index management (create, delete, open, close, refresh)
+- Cluster operations (health, stats)
+- Count operations
+
+This suite demonstrates the **proper way** to use smithy4s-generated services with http4s client, providing:
+- Type-safe HTTP calls through the ElasticService trait
+- Automatic request/response serialization
+- Proper HTTP routing via smithy4s bindings
+- End-to-end integration validation
+
 ### DocumentOperationsIntegrationTest
 Tests document CRUD operations:
 - Index documents with various options
@@ -99,6 +120,21 @@ Tests alias management:
 - Get aliases for an index
 
 **Mirrors**: `AliasesHttpTest`
+
+### ElasticServiceIntegrationTest
+Tests the **generated ElasticService** using smithy4s-http4s client integration:
+- Creates a smithy4s HTTP client for the ElasticService trait
+- Tests all operations through the generated service interface
+- Demonstrates proper http4s and smithy4s integration
+- End-to-end testing of the unified service
+
+**Key Features**:
+- Uses `SimpleRestJsonBuilder` to create ElasticService client
+- All operations go through the generated service trait
+- Type-safe HTTP bindings with proper routing
+- Validates complete smithy4s workflow
+
+**Mirrors**: All handler operations, but using generated service interface
 
 ### Smithy4sTypesTest
 Demonstrates usage of Smithy4s generated types:
@@ -182,14 +218,46 @@ Elasticsearch requires ~2GB RAM. Ensure Docker has sufficient memory allocated.
 "org.http4s" %% "http4s-ember-client" % "0.23.33" % Test
 ```
 
+## Smithy4s-Http4s Integration
+
+The **ElasticServiceIntegrationTest** demonstrates the recommended pattern for using smithy4s-generated services:
+
+```scala
+// Create smithy4s client for ElasticService
+def createElasticServiceClient(httpClient: Client[IO], baseUri: String): IO[ElasticService[IO]] = {
+  val uri = Uri.unsafeFromString(baseUri)
+  
+  SimpleRestJsonBuilder(ElasticService)
+    .client(httpClient)
+    .uri(uri)
+    .resource
+    .use(client => IO.pure(client))
+}
+
+// Use the generated service
+for {
+  elasticService <- createElasticServiceClient(httpClient, esUrl)
+  
+  // All operations are type-safe and use HTTP bindings from Smithy
+  indexResponse <- elasticService.indexDocument(IndexDocumentInput(...))
+  getResponse <- elasticService.getDocument(GetDocumentInput(...))
+  searchResponse <- elasticService.search(SearchInput(...))
+} yield results
+```
+
+### Benefits of Service-Based Approach
+
+1. **Type Safety**: All HTTP paths, methods, and parameters are validated at compile time
+2. **HTTP Bindings**: `@http`, `@httpLabel`, `@httpQuery` traits ensure correct routing
+3. **Automatic Serialization**: JSON encoding/decoding handled by smithy4s
+4. **Single Interface**: All 42 operations accessible from one ElasticService trait
+5. **Testable**: Easy to mock or stub the service interface for unit tests
+
 ## Future Enhancements
 
 Potential additions:
-- Snapshot/Restore operation tests
-- Reindex operation tests
-- Ingest pipeline tests
-- Script management tests
-- Task API tests
+- More ElasticService tests for remaining operations (Snapshot, Reindex, Ingest, Script, Task)
+- Mock service implementation for unit tests
+- Error handling scenarios
 - More complex aggregation scenarios
-- Scroll API testing
-- Integration with smithy4s-http4s for service-based testing
+- Performance benchmarks comparing approaches

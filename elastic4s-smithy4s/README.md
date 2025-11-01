@@ -231,13 +231,25 @@ sbt "smithy4s/testOnly se.thanh.elastic4s.integration.DocumentOperationsIntegrat
 
 ### Test Coverage
 
-- **DocumentOperationsIntegrationTest**: Index, Get, Update, Delete, Count operations
-- **SearchIntegrationTest**: Search queries, aggregations, sorting
-- **BulkOperationsIntegrationTest**: Bulk index and mixed operations
-- **IndexManagementIntegrationTest**: Create, delete, open, close, refresh, stats
-- **ClusterOperationsIntegrationTest**: Cluster health and statistics
-- **AliasOperationsIntegrationTest**: Add/remove and get aliases
-- **Smithy4sTypesTest**: Demonstrates usage of generated types
+The module has two types of integration tests:
+
+1. **ElasticServiceIntegrationTest** (Recommended): Tests using the generated ElasticService with smithy4s-http4s
+   - Demonstrates proper smithy4s-http4s integration
+   - Uses `SimpleRestJsonBuilder` to create type-safe HTTP client
+   - All operations through the unified ElasticService interface
+   - End-to-end validation of HTTP bindings and serialization
+   - Covers: Index, Get, Update, Delete, Search, Bulk, Index Management, Cluster operations
+
+2. **Operation-specific tests**: Tests using manual HTTP requests with generated data types
+   - **DocumentOperationsIntegrationTest**: Index, Get, Update, Delete, Count operations
+   - **SearchIntegrationTest**: Search queries, aggregations, sorting
+   - **BulkOperationsIntegrationTest**: Bulk index and mixed operations
+   - **IndexManagementIntegrationTest**: Create, delete, open, close, refresh, stats
+   - **ClusterOperationsIntegrationTest**: Cluster health and statistics
+   - **AliasOperationsIntegrationTest**: Add/remove and get aliases
+   - **Smithy4sTypesTest**: Demonstrates usage of generated types
+
+The **ElasticServiceIntegrationTest** demonstrates the recommended approach for using smithy4s-generated services in production code.
 
 See [integration/README.md](src/test/scala/se/thanh/elastic4s/integration/README.md) for detailed testing documentation.
 
