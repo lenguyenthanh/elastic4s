@@ -153,3 +153,41 @@ list SnapshotList {
 list SnapshotFailureList {
     member: SnapshotFailure
 }
+
+/// Response for get repository
+structure GetRepositoryResponse {
+    repositories: RepositoryMap
+}
+
+/// Repository information
+structure RepositoryInfo {
+    type: String
+    settings: RepositorySettings
+}
+
+map RepositoryMap {
+    key: String
+    value: RepositoryInfo
+}
+
+/// Response for create snapshot
+structure CreateSnapshotResponse {
+    snapshot: SnapshotInfo
+}
+
+/// Response for get snapshot  
+structure GetSnapshotResponse {
+    snapshots: SnapshotList
+}
+
+/// Response for restore snapshot
+structure RestoreSnapshotResponse {
+    snapshot: RestoreSnapshotInfo
+}
+
+/// Restore snapshot information
+structure RestoreSnapshotInfo {
+    snapshot: String
+    indices: StringList
+    shards: SnapshotShardStats
+}

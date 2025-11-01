@@ -10,6 +10,7 @@ service ElasticsearchDocumentService {
         GetDocument
         MultiGetDocuments
         CountDocuments
+        IndexDocument
     ]
 }
 
@@ -81,4 +82,40 @@ structure CountDocumentsInput {
 operation CountDocuments {
     input: CountDocumentsInput
     output: CountResponse
+}
+
+/// HTTP-bound Index Document Request
+structure IndexDocumentInput {
+    @required
+    @httpLabel
+    index: String
+
+    @httpLabel
+    id: String
+
+    @required
+    @httpPayload
+    body: Document
+
+    @httpQuery("routing")
+    routing: String
+
+    @httpQuery("timeout")
+    timeout: String
+
+    @httpQuery("refresh")
+    refresh: String
+
+    @httpQuery("wait_for_active_shards")
+    waitForActiveShards: String
+
+    @httpQuery("pipeline")
+    pipeline: String
+}
+
+/// Index a document
+@http(method: "POST", uri: "/{index}/_doc/{id}")
+operation IndexDocument {
+    input: IndexDocumentInput
+    output: IndexResponse
 }
