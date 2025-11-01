@@ -13,6 +13,7 @@ The `elastic4s-smithy4s` module is equivalent to the `elastic4s-domain` module b
 - **Type safety**: Smithy4s generates type-safe Scala code with proper validation
 - **Documentation**: Smithy specifications serve as machine-readable documentation
 - **Interoperability**: Smithy models can be used to generate code for other languages
+- **HTTP Bindings**: Service definitions include HTTP method, URI, and parameter bindings
 
 ## Structure
 
@@ -30,6 +31,40 @@ The module contains Smithy specifications in `src/main/smithy/` that define:
   - Pipeline operations: Ingest (`ingest.smithy`)
   - Script operations: Script (`script.smithy`)
   - Task operations: Task (`task.smithy`)
+- **Service definitions**: HTTP-bound service definitions in `services/` directory
+  - `services/document.smithy`: ElasticsearchDocumentService
+  - `services/search.smithy`: ElasticsearchSearchService
+  - `services/index.smithy`: ElasticsearchIndexService
+  - `services/cluster.smithy`: ElasticsearchClusterService
+
+## Smithy Services
+
+The module includes HTTP-bound Smithy service definitions that map operations to HTTP endpoints:
+
+### ElasticsearchDocumentService
+- `GetDocument` - GET /{index}/_doc/{id}
+- `MultiGetDocuments` - POST /_mget
+- `CountDocuments` - POST /_count
+
+### ElasticsearchSearchService
+- `Search` - POST /{index}/_search
+- `SearchScroll` - POST /_search/scroll/{scrollId}
+- `ClearScroll` - DELETE /_search/scroll
+
+### ElasticsearchIndexService
+- `CreateIndex` - PUT /{index}
+- `DeleteIndex` - DELETE /{index}
+- `OpenIndex` - POST /{index}/_open
+- `CloseIndex` - POST /{index}/_close
+- `RefreshIndex` - POST /{index}/_refresh
+- `FlushIndex` - POST /{index}/_flush
+- `GetIndexStats` - GET /{index}/_stats
+- `GetAliases` - GET /{index}/_alias/{alias}
+- `UpdateAliases` - POST /_aliases
+
+### ElasticsearchClusterService
+- `GetClusterHealth` - GET /_cluster/health
+- `GetClusterStats` - GET /_cluster/stats
 
 ## Usage
 
@@ -41,7 +76,17 @@ libraryDependencies += "nl.gn0s1s" %% "elastic4s-smithy4s" % elastic4sVersion
 
 The generated Scala code will be available in the `com.sksamuel.elastic4s.smithy.*` packages.
 
-Example usage:
+Example usage with service:
+
+```scala
+import com.sksamuel.elastic4s.smithy.services._
+import smithy4s.http4s.SimpleRestJsonBuilder
+
+// The generated service trait can be used with smithy4s HTTP libraries
+val service: ElasticsearchDocumentService[F] = ???
+```
+
+Example usage with generated types:
 
 ```scala
 import com.sksamuel.elastic4s.smithy.get.GetRequest
