@@ -28,9 +28,6 @@ jobs:
       - name: set up sbt
         uses: sbt/setup-sbt@v1
 
-      - name: Launch elastic docker
-        uses: ./.github/actions/launch-elasticsearch
-
       - name: run tests
         run: sbt ++2.13.17 compile
 
@@ -50,9 +47,6 @@ jobs:
 
       - name: set up sbt
         uses: sbt/setup-sbt@v1
-
-      - name: Launch elastic docker
-        uses: ./.github/actions/launch-elasticsearch
 
       - name: run tests
         run: sbt ++3.3.7 elastic4s-scala3/compile
