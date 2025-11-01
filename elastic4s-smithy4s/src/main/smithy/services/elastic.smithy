@@ -13,12 +13,12 @@ service ElasticService {
         MultiGetDocuments
         CountDocuments
         IndexDocument
-        
+
         // Search Operations
         Search
         SearchScroll
         ClearScroll
-        
+
         // Index Management Operations
         CreateIndex
         DeleteIndex
@@ -29,22 +29,22 @@ service ElasticService {
         GetIndexStats
         GetAliases
         UpdateAliases
-        
+
         // Cluster Operations
         GetClusterHealth
         GetClusterStats
-        
+
         // Update Operations
         UpdateDocument
         UpdateByQuery
-        
+
         // Bulk Operations
         BulkOperations
-        
+
         // Delete Operations
         DeleteDocument
         DeleteByQuery
-        
+
         // Snapshot Operations
         CreateRepository
         GetRepository
@@ -53,21 +53,21 @@ service ElasticService {
         GetSnapshot
         DeleteSnapshot
         RestoreSnapshot
-        
+
         // Reindex Operations
         Reindex
-        
+
         // Ingest Pipeline Operations
         PutPipeline
         GetPipeline
         DeletePipeline
         SimulatePipeline
-        
+
         // Script Management Operations
         PutStoredScript
         GetStoredScript
         DeleteStoredScript
-        
+
         // Task Management Operations
         ListTasks
         GetTask
@@ -275,6 +275,12 @@ structure CreateIndexInput {
     waitForActiveShards: String
 }
 
+structure CreateIndexResponse {
+    acknowledged: Boolean
+    @jsonName("shards_acknowledged")
+    shardsAcknowledged: Boolean
+}
+
 /// Create a new index
 @http(method: "PUT", uri: "/{index}")
 @idempotent
@@ -358,7 +364,6 @@ structure RefreshIndexInput {
 @http(method: "POST", uri: "/{index}/_refresh")
 operation RefreshIndex {
     input: RefreshIndexInput
-    output: RefreshIndexResponse
 }
 
 /// HTTP-bound Flush Index Request
@@ -379,6 +384,10 @@ structure FlushIndexInput {
 operation FlushIndex {
     input: FlushIndexInput
     output: FlushIndexResponse
+}
+structure FlushIndexResponse {
+  @jsonName("_shards")
+  shards: Shards
 }
 
 /// HTTP-bound Get Index Stats Request
@@ -436,6 +445,10 @@ structure UpdateAliasesInput {
 operation UpdateAliases {
     input: UpdateAliasesInput
     output: UpdateAliasesResponse
+}
+
+structure UpdateAliasesResponse {
+    acknowledged: Boolean
 }
 
 // ========================================
@@ -672,6 +685,10 @@ structure CreateRepositoryInput {
     verify: Boolean
 }
 
+structure CreateRepositoryResponse {
+    acknowledged: Boolean
+}
+
 /// Create a snapshot repository
 @http(method: "PUT", uri: "/_snapshot/{repository}")
 @idempotent
@@ -720,6 +737,10 @@ structure DeleteRepositoryInput {
 operation DeleteRepository {
     input: DeleteRepositoryInput
     output: DeleteRepositoryResponse
+}
+
+structure DeleteRepositoryResponse {
+    acknowledged: Boolean
 }
 
 /// HTTP-bound Create Snapshot Request
@@ -795,6 +816,10 @@ structure DeleteSnapshotInput {
 operation DeleteSnapshot {
     input: DeleteSnapshotInput
     output: DeleteSnapshotResponse
+}
+
+structure DeleteSnapshotResponse {
+    acknowledged: Boolean
 }
 
 /// HTTP-bound Restore Snapshot Request
@@ -884,6 +909,10 @@ structure PutPipelineInput {
 operation PutPipeline {
     input: PutPipelineInput
     output: PutPipelineResponse
+}
+
+structure PutPipelineResponse {
+    acknowledged: Boolean
 }
 
 /// HTTP-bound Get Pipeline Request
@@ -976,6 +1005,10 @@ structure PutStoredScriptInput {
 operation PutStoredScript {
     input: PutStoredScriptInput
     output: PutStoredScriptResponse
+}
+
+structure PutStoredScriptResponse {
+    acknowledged: Boolean
 }
 
 /// HTTP-bound Get Stored Script Request
