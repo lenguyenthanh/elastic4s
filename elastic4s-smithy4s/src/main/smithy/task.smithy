@@ -1,8 +1,6 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.task
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request to list tasks
 structure ListTasksRequest {
@@ -22,10 +20,10 @@ structure ListTasksResponse {
 /// Task node information
 structure TaskNode {
     name: String
-    
+
     @jsonName("transport_address")
     transportAddress: String
-    
+
     host: String
     ip: String
     roles: StringList
@@ -38,13 +36,13 @@ structure TaskInfo {
     id: Long
     type: String
     action: String
-    
+
     @jsonName("start_time_in_millis")
     startTimeInMillis: Long
-    
+
     @jsonName("running_time_in_nanos")
     runningTimeInNanos: Long
-    
+
     cancellable: Boolean
     description: String
     headers: HeaderMap
@@ -54,7 +52,7 @@ structure TaskInfo {
 structure GetTaskRequest {
     @required
     taskId: String
-    
+
     waitForCompletion: Boolean
     timeout: String
 }
@@ -70,21 +68,21 @@ structure GetTaskResponse {
 /// Task response
 structure TaskResponse {
     took: Long
-    
+
     @jsonName("timed_out")
     timedOut: Boolean
-    
+
     total: Long
     updated: Long
     created: Long
     deleted: Long
     batches: Integer
-    
+
     @jsonName("version_conflicts")
     versionConflicts: Long
-    
+
     noops: Long
-    failures: FailureList
+    failures: IndexFailureList
 }
 
 /// Task error
@@ -97,32 +95,13 @@ structure TaskError {
 structure CancelTaskRequest {
     @required
     taskId: String
-    
+
     waitForCompletion: Boolean
 }
 
 /// Response for cancel task
 structure CancelTaskResponse {
     nodes: TaskNodeMap
-}
-
-/// Failure information
-structure Failure {
-    index: String
-    type: String
-    id: String
-    cause: FailureCause
-    status: Integer
-}
-
-/// Failure cause
-structure FailureCause {
-    type: String
-    reason: String
-}
-
-list FailureList {
-    member: Failure
 }
 
 map TaskNodeMap {

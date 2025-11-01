@@ -1,20 +1,18 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.ingest
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request to create or update an ingest pipeline
 structure PutPipelineRequest {
     @required
     id: String
-    
+
     @required
     description: String
-    
+
     @required
     processors: ProcessorList
-    
+
     onFailure: ProcessorList
     version: Integer
     timeout: String
@@ -30,7 +28,7 @@ structure Processor {
     onFailure: ProcessorList
     if: String
     tag: String
-    
+
     /// Additional processor-specific configuration
     config: ProcessorConfig
 }
@@ -39,7 +37,7 @@ structure Processor {
 structure GetPipelineRequest {
     @required
     id: String
-    
+
     masterTimeout: String
 }
 
@@ -59,7 +57,7 @@ structure PipelineInfo {
 structure DeletePipelineRequest {
     @required
     id: String
-    
+
     timeout: String
     masterTimeout: String
 }
@@ -73,10 +71,10 @@ structure DeletePipelineResponse {
 structure SimulatePipelineRequest {
     @required
     id: String
-    
+
     @required
     docs: SimulateDocList
-    
+
     verbose: Boolean
 }
 
@@ -84,10 +82,10 @@ structure SimulatePipelineRequest {
 structure SimulateDoc {
     @jsonName("_index")
     index: String
-    
+
     @jsonName("_id")
     id: String
-    
+
     @jsonName("_source")
     source: Document
 }
@@ -100,10 +98,10 @@ structure SimulatePipelineResponse {
 /// Simulate result
 structure SimulateResult {
     doc: SimulateDoc
-    
+
     @jsonName("processor_results")
     processorResults: ProcessorResultList
-    
+
     error: IngestError
 }
 
@@ -111,7 +109,7 @@ structure SimulateResult {
 structure ProcessorResult {
     @jsonName("processor_type")
     processorType: String
-    
+
     status: String
     doc: SimulateDoc
     error: IngestError
@@ -121,7 +119,7 @@ structure ProcessorResult {
 structure IngestError {
     type: String
     reason: String
-    
+
     @jsonName("caused_by")
     causedBy: IngestError
 }

@@ -1,65 +1,62 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.search
-
-use com.sksamuel.elastic4s.smithy.common#StringList
-use com.sksamuel.elastic4s.smithy.common#Operator
+namespace se.thanh.elastic4cats
 
 /// Search request
 structure SearchRequest {
     @required
     indexes: StringList
-    
+
     query: Document
     from: Integer
     size: Integer
     timeout: String
     terminateAfter: Long
-    
+
     sort: SortList
     trackScores: Boolean
     trackTotalHits: TrackTotalHits
-    
+
     @jsonName("_source")
     source: SourceFilter
-    
+
     storedFields: StringList
     docvalueFields: StringList
     scriptFields: ScriptFieldMap
-    
+
     explain: Boolean
     version: Boolean
     seqNoPrimaryTerm: Boolean
-    
+
     minScore: Double
-    
+
     searchType: String
     requestCache: Boolean
     allowNoIndices: Boolean
     expandWildcards: String
     ignoreUnavailable: Boolean
     ignoreThrottled: Boolean
-    
+
     routing: StringList
     preference: String
-    
+
     scroll: String
-    
+
     suggest: SuggestMap
     highlight: Highlight
-    
+
     aggregations: AggregationMap
-    
+
     postFilter: Document
-    
+
     searchAfter: SortValueList
-    
+
     collapse: FieldCollapse
-    
+
     indicesBoost: IndicesBoostList
-    
+
     profile: Boolean
-    
+
     stats: StringList
 }
 
@@ -86,7 +83,7 @@ union Sort {
 structure FieldSort {
     @required
     field: String
-    
+
     order: SortOrder
     mode: SortMode
     missing: String
@@ -98,10 +95,10 @@ structure FieldSort {
 structure ScriptSort {
     @required
     script: Script
-    
+
     @required
     type: String
-    
+
     order: SortOrder
 }
 
@@ -109,10 +106,10 @@ structure ScriptSort {
 structure GeoDistanceSort {
     @required
     field: String
-    
+
     @required
     location: GeoPoint
-    
+
     order: SortOrder
     unit: String
     mode: SortMode
@@ -138,15 +135,6 @@ enum SortMode {
     SUM = "sum"
     AVG = "avg"
     MEDIAN = "median"
-}
-
-/// Script for sorting or scripted fields
-structure Script {
-    @required
-    source: String
-    
-    lang: String
-    params: ScriptParams
 }
 
 /// Highlight settings
@@ -184,7 +172,7 @@ structure HighlightField {
 structure FieldCollapse {
     @required
     field: String
-    
+
     innerHits: InnerHitsList
     maxConcurrentGroupSearches: Integer
 }
@@ -200,22 +188,22 @@ structure InnerHits {
 /// Search response
 structure SearchResponse {
     took: Long
-    
+
     @jsonName("timed_out")
     timedOut: Boolean
-    
+
     @jsonName("_shards")
     shards: SearchShards
-    
+
     hits: SearchHits
-    
+
     aggregations: AggregationResultMap
-    
+
     suggest: SuggestResultMap
-    
+
     @jsonName("_scroll_id")
     scrollId: String
-    
+
     profile: ProfileResult
 }
 
@@ -245,10 +233,10 @@ structure FailureReason {
 /// Search hits
 structure SearchHits {
     total: TotalHits
-    
+
     @jsonName("max_score")
     maxScore: Double
-    
+
     hits: HitList
 }
 
@@ -262,31 +250,31 @@ structure TotalHits {
 structure Hit {
     @jsonName("_index")
     index: String
-    
+
     @jsonName("_type")
     type: String
-    
+
     @jsonName("_id")
     id: String
-    
+
     @jsonName("_score")
     score: Double
-    
+
     @jsonName("_source")
     source: Document
-    
+
     fields: FieldValueMap
-    
+
     highlight: HighlightResultMap
-    
+
     sort: SortValueList
-    
+
     @jsonName("matched_queries")
     matchedQueries: StringList
-    
+
     @jsonName("_explanation")
     explanation: Explanation
-    
+
     @jsonName("inner_hits")
     innerHits: InnerHitsResultMap
 }
@@ -439,9 +427,4 @@ map InnerHitsResultMap {
 map BreakdownMap {
     key: String
     value: Long
-}
-
-map ScriptParams {
-    key: String
-    value: Document
 }

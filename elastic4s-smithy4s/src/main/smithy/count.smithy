@@ -1,14 +1,11 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.count
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request for counting documents
 structure CountRequest {
     @required
     indexes: StringList
-    
     query: Document
     allowNoIndices: Boolean
     analyzeWildcard: Boolean

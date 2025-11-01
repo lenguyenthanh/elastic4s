@@ -1,14 +1,12 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.alias
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request to get aliases
 structure GetAliasesRequest {
     @required
     indices: StringList
-    
+
     aliases: StringList
     ignoreUnavailable: Boolean
 }
@@ -26,16 +24,16 @@ structure AliasInfo {
 /// Alias details
 structure AliasDetails {
     filter: Document
-    
+
     @jsonName("index_routing")
     indexRouting: String
-    
+
     @jsonName("search_routing")
     searchRouting: String
-    
+
     @jsonName("is_write_index")
     isWriteIndex: Boolean
-    
+
     @jsonName("is_hidden")
     isHidden: Boolean
 }
@@ -44,7 +42,7 @@ structure AliasDetails {
 structure IndicesAliasesRequest {
     @required
     actions: AliasActionList
-    
+
     timeout: String
     masterTimeout: String
 }
@@ -60,22 +58,22 @@ union AliasAction {
 structure AddAliasAction {
     @required
     indices: StringList
-    
+
     @required
     alias: String
-    
+
     filter: Document
     routing: String
-    
+
     @jsonName("index_routing")
     indexRouting: String
-    
+
     @jsonName("search_routing")
     searchRouting: String
-    
+
     @jsonName("is_write_index")
     isWriteIndex: Boolean
-    
+
     @jsonName("is_hidden")
     isHidden: Boolean
 }
@@ -84,7 +82,7 @@ structure AddAliasAction {
 structure RemoveAliasAction {
     @required
     indices: StringList
-    
+
     @required
     alias: String
 }

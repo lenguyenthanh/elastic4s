@@ -1,14 +1,12 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.scroll
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request to search with scroll
 structure SearchScrollRequest {
     @required
     scrollId: String
-    
+
     keepAlive: String
 }
 
@@ -16,15 +14,15 @@ structure SearchScrollRequest {
 structure SearchScrollResponse {
     @jsonName("_scroll_id")
     scrollId: String
-    
+
     took: Long
-    
+
     @jsonName("timed_out")
     timedOut: Boolean
-    
+
     @jsonName("_shards")
     shards: ScrollShards
-    
+
     hits: ScrollHits
 }
 
@@ -39,11 +37,11 @@ structure ScrollShards {
 /// Scroll hits
 structure ScrollHits {
     total: ScrollTotalHits
-    
+
     @jsonName("max_score")
     maxScore: Double
-    
-    hits: HitList
+
+    hits: ScrollHitList
 }
 
 /// Total hits information
@@ -56,19 +54,19 @@ structure ScrollTotalHits {
 structure ScrollHit {
     @jsonName("_index")
     index: String
-    
+
     @jsonName("_type")
     type: String
-    
+
     @jsonName("_id")
     id: String
-    
+
     @jsonName("_score")
     score: Double
-    
+
     @jsonName("_source")
     source: Document
-    
+
     sort: SortValueList
 }
 
@@ -81,12 +79,12 @@ structure ClearScrollRequest {
 /// Response for clear scroll
 structure ClearScrollResponse {
     succeeded: Boolean
-    
+
     @jsonName("num_freed")
     numFreed: Integer
 }
 
-list HitList {
+list ScrollHitList {
     member: ScrollHit
 }
 

@@ -1,10 +1,6 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.services
-
-use com.sksamuel.elastic4s.smithy.search#SearchResponse
-use com.sksamuel.elastic4s.smithy.scroll#SearchScrollResponse
-use com.sksamuel.elastic4s.smithy.scroll#ClearScrollResponse
+namespace se.thanh.elastic4cats
 
 /// Elasticsearch Search Service
 @title("Elasticsearch Search API")
@@ -15,10 +11,6 @@ service ElasticsearchSearchService {
         SearchScroll
         ClearScroll
     ]
-    rename: {
-        "com.sksamuel.elastic4s.smithy.scroll#HitList": "ScrollHitList"
-        "com.sksamuel.elastic4s.smithy.scroll#SortValueList": "ScrollSortValueList"
-    }
 }
 
 /// HTTP-bound Search Request
@@ -26,20 +18,20 @@ structure SearchInput {
     @required
     @httpLabel
     index: String
-    
+
     @required
     @httpPayload
     body: Document
-    
+
     @httpQuery("routing")
     routing: String
-    
+
     @httpQuery("preference")
     preference: String
-    
+
     @httpQuery("timeout")
     timeout: String
-    
+
     @httpQuery("scroll")
     scroll: String
 }
@@ -56,7 +48,7 @@ structure SearchScrollInput {
     @required
     @httpLabel
     scrollId: String
-    
+
     @httpQuery("scroll")
     scroll: String
 }

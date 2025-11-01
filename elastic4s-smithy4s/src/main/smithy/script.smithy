@@ -1,17 +1,15 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.script
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request to create or update a stored script
 structure PutStoredScriptRequest {
     @required
     id: String
-    
+
     @required
     script: StoredScript
-    
+
     timeout: String
     masterTimeout: String
     context: String
@@ -21,7 +19,7 @@ structure PutStoredScriptRequest {
 structure StoredScript {
     @required
     source: String
-    
+
     lang: String
     params: ScriptParams
 }
@@ -30,7 +28,7 @@ structure StoredScript {
 structure GetStoredScriptRequest {
     @required
     id: String
-    
+
     masterTimeout: String
 }
 
@@ -38,7 +36,7 @@ structure GetStoredScriptRequest {
 structure GetStoredScriptResponse {
     @jsonName("_id")
     id: String
-    
+
     found: Boolean
     script: StoredScript
 }
@@ -47,7 +45,7 @@ structure GetStoredScriptResponse {
 structure DeleteStoredScriptRequest {
     @required
     id: String
-    
+
     timeout: String
     masterTimeout: String
 }
@@ -61,10 +59,10 @@ structure DeleteStoredScriptResponse {
 structure SearchTemplateRequest {
     @required
     indexes: StringList
-    
+
     @required
     source: String
-    
+
     params: TemplateParams
     explain: Boolean
     profile: Boolean
@@ -74,7 +72,7 @@ structure SearchTemplateRequest {
 structure PutSearchTemplateRequest {
     @required
     id: String
-    
+
     @required
     script: TemplateScript
 }
@@ -83,7 +81,7 @@ structure PutSearchTemplateRequest {
 structure TemplateScript {
     @required
     source: String
-    
+
     lang: String
 }
 
@@ -97,11 +95,6 @@ structure GetSearchTemplateRequest {
 structure DeleteSearchTemplateRequest {
     @required
     id: String
-}
-
-map ScriptParams {
-    key: String
-    value: Document
 }
 
 map TemplateParams {

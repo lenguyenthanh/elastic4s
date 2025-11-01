@@ -1,10 +1,6 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.services
-
-use com.sksamuel.elastic4s.smithy.get#GetResponse
-use com.sksamuel.elastic4s.smithy.get#MultiGetResponse
-use com.sksamuel.elastic4s.smithy.count#CountResponse
+namespace se.thanh.elastic4cats
 
 /// Elasticsearch Document Service
 @title("Elasticsearch Document API")
@@ -22,20 +18,20 @@ structure GetDocumentInput {
     @required
     @httpLabel
     index: String
-    
+
     @required
     @httpLabel
     id: String
-    
+
     @httpQuery("routing")
     routing: String
-    
+
     @httpQuery("preference")
     preference: String
-    
+
     @httpQuery("refresh")
     refresh: Boolean
-    
+
     @httpQuery("realtime")
     realtime: Boolean
 }
@@ -48,18 +44,18 @@ operation GetDocument {
     output: GetResponse
 }
 
-/// HTTP-bound MultiGet Request  
+/// HTTP-bound MultiGet Request
 structure MultiGetDocumentsInput {
     @required
     @httpPayload
     body: Document
-    
+
     @httpQuery("preference")
     preference: String
-    
+
     @httpQuery("refresh")
     refresh: Boolean
-    
+
     @httpQuery("realtime")
     realtime: Boolean
 }
@@ -75,7 +71,7 @@ operation MultiGetDocuments {
 structure CountDocumentsInput {
     @httpQuery("index")
     indexes: String
-    
+
     @httpPayload
     body: Document
 }

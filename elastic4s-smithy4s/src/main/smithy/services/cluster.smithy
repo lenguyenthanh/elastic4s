@@ -1,9 +1,6 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.services
-
-use com.sksamuel.elastic4s.smithy.cluster#ClusterHealthResponse
-use com.sksamuel.elastic4s.smithy.cluster#ClusterStatsResponse
+namespace se.thanh.elastic4cats
 
 /// Elasticsearch Cluster Service
 @title("Elasticsearch Cluster API")
@@ -19,10 +16,10 @@ service ElasticsearchClusterService {
 structure GetClusterHealthInput {
     @httpQuery("level")
     level: String
-    
+
     @httpQuery("wait_for_status")
     waitForStatus: String
-    
+
     @httpQuery("timeout")
     timeout: String
 }

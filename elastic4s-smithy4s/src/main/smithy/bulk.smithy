@@ -1,15 +1,12 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.bulk
-
-use com.sksamuel.elastic4s.smithy.common#RefreshPolicy
-use com.sksamuel.elastic4s.smithy.common#Shards
+namespace se.thanh.elastic4cats
 
 /// Bulk request containing multiple operations
 structure BulkRequest {
     @required
     operations: BulkOperationList
-    
+
     index: String
     timeout: String
     refreshPolicy: RefreshPolicy
@@ -30,12 +27,12 @@ union BulkOperation {
 structure BulkIndexOperation {
     @required
     index: String
-    
+
     id: String
-    
+
     @required
     source: Document
-    
+
     routing: String
     version: Long
     versionType: String
@@ -46,12 +43,12 @@ structure BulkIndexOperation {
 structure BulkCreateOperation {
     @required
     index: String
-    
+
     id: String
-    
+
     @required
     source: Document
-    
+
     routing: String
     version: Long
     versionType: String
@@ -62,10 +59,10 @@ structure BulkCreateOperation {
 structure BulkUpdateOperation {
     @required
     index: String
-    
+
     @required
     id: String
-    
+
     doc: Document
     script: Script
     docAsUpsert: Boolean
@@ -79,22 +76,13 @@ structure BulkUpdateOperation {
 structure BulkDeleteOperation {
     @required
     index: String
-    
+
     @required
     id: String
-    
+
     routing: String
     version: Long
     versionType: String
-}
-
-/// Script for bulk update operations
-structure Script {
-    @required
-    source: String
-    
-    lang: String
-    params: ScriptParams
 }
 
 /// Response for bulk request
@@ -116,27 +104,27 @@ structure BulkItemResponse {
 structure BulkItemResult {
     @jsonName("_index")
     index: String
-    
+
     @jsonName("_type")
     type: String
-    
+
     @jsonName("_id")
     id: String
-    
+
     @jsonName("_version")
     version: Long
-    
+
     result: String
-    
+
     @jsonName("_shards")
     shards: Shards
-    
+
     @jsonName("_seq_no")
     seqNo: Long
-    
+
     @jsonName("_primary_term")
     primaryTerm: Long
-    
+
     status: Integer
     error: BulkError
 }
@@ -145,10 +133,10 @@ structure BulkItemResult {
 structure BulkError {
     type: String
     reason: String
-    
+
     @jsonName("index_uuid")
     indexUuid: String
-    
+
     shard: String
     index: String
 }
@@ -159,9 +147,4 @@ list BulkOperationList {
 
 list BulkItemResponseList {
     member: BulkItemResponse
-}
-
-map ScriptParams {
-    key: String
-    value: Document
 }

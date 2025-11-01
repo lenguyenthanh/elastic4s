@@ -1,17 +1,15 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.snapshot
-
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request to create a snapshot repository
 structure CreateRepositoryRequest {
     @required
     repositoryName: String
-    
+
     @required
     type: String
-    
+
     settings: RepositorySettings
     verify: Boolean
     timeout: String
@@ -32,7 +30,7 @@ structure RepositorySettings {
 structure GetRepositoryRequest {
     @required
     repositoryName: String
-    
+
     local: Boolean
     masterTimeout: String
 }
@@ -41,7 +39,7 @@ structure GetRepositoryRequest {
 structure DeleteRepositoryRequest {
     @required
     repositoryName: String
-    
+
     timeout: String
     masterTimeout: String
 }
@@ -50,10 +48,10 @@ structure DeleteRepositoryRequest {
 structure CreateSnapshotRequest {
     @required
     snapshotName: String
-    
+
     @required
     repositoryName: String
-    
+
     indices: StringList
     ignoreUnavailable: Boolean
     waitForCompletion: Boolean
@@ -65,10 +63,10 @@ structure CreateSnapshotRequest {
 structure GetSnapshotsRequest {
     @required
     snapshotNames: StringList
-    
+
     @required
     repositoryName: String
-    
+
     ignoreUnavailable: Boolean
     verbose: Boolean
 }
@@ -91,7 +89,7 @@ structure SnapshotInfo {
     endTime: String
     endTimeInMillis: Long
     durationInMillis: Long
-    failures: FailureList
+    failures: SnapshotFailureList
     shards: SnapshotShardStats
 }
 
@@ -114,10 +112,10 @@ structure SnapshotFailure {
 structure DeleteSnapshotRequest {
     @required
     snapshotName: String
-    
+
     @required
     repositoryName: String
-    
+
     timeout: String
     masterTimeout: String
 }
@@ -126,24 +124,24 @@ structure DeleteSnapshotRequest {
 structure RestoreSnapshotRequest {
     @required
     snapshotName: String
-    
+
     @required
     repositoryName: String
-    
+
     indices: StringList
     ignoreUnavailable: Boolean
     includeGlobalState: Boolean
     renamePattern: String
     renameReplacement: String
     includeAliases: Boolean
-    indexSettings: IndexSettings
+    indexSettings: SnapshotIndexSettings
     ignoreIndexSettings: StringList
     partial: Boolean
     waitForCompletion: Boolean
 }
 
 /// Index settings for restore
-structure IndexSettings {
+structure SnapshotIndexSettings {
     numberOfShards: Integer
     numberOfReplicas: Integer
 }
@@ -152,6 +150,6 @@ list SnapshotList {
     member: SnapshotInfo
 }
 
-list FailureList {
+list SnapshotFailureList {
     member: SnapshotFailure
 }

@@ -1,6 +1,6 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.common
+namespace se.thanh.elastic4cats
 
 /// Health status of a cluster
 enum HealthStatus {
@@ -60,10 +60,10 @@ enum Priority {
 structure DocumentRef {
     @required
     index: String
-    
+
     @required
     id: String
-    
+
     routing: String
 }
 
@@ -71,7 +71,7 @@ structure DocumentRef {
 structure FetchSourceContext {
     @required
     fetchSource: Boolean
-    
+
     includes: StringList
     excludes: StringList
 }
@@ -87,3 +87,44 @@ structure Shards {
 list StringList {
     member: String
 }
+
+/// Script for sorting or scripted fields
+structure Script {
+    @required
+    source: String
+
+    lang: String
+    params: ScriptParams
+}
+
+map ScriptParams {
+    key: String
+    value: Document
+}
+
+
+list IndexFailureList {
+    member: IndexFailure
+}
+
+/// Failure information
+structure IndexFailure {
+    index: String
+    type: String
+    id: String
+    status: Integer
+    cause: FailureCause
+}
+
+/// Failure cause
+structure FailureCause {
+    type: String
+    reason: String
+}
+
+/// Retry information
+structure Retries {
+    bulk: Integer
+    search: Integer
+}
+

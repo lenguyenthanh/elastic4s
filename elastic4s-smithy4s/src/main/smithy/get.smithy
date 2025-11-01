@@ -1,19 +1,15 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.get
-
-use com.sksamuel.elastic4s.smithy.common#FetchSourceContext
-use com.sksamuel.elastic4s.smithy.common#VersionType
-use com.sksamuel.elastic4s.smithy.common#StringList
+namespace se.thanh.elastic4cats
 
 /// Request for getting a document by ID
 structure GetRequest {
     @required
     index: String
-    
+
     @required
     id: String
-    
+
     storedFields: StringList
     parent: String
     preference: String
@@ -30,26 +26,26 @@ structure GetResponse {
     @jsonName("_id")
     @required
     id: String
-    
+
     @jsonName("_index")
     @required
     index: String
-    
+
     @jsonName("_type")
     type: String
-    
+
     @jsonName("_version")
     version: Long
-    
+
     @jsonName("_seq_no")
     seqNo: Long
-    
+
     @jsonName("_primary_term")
     primaryTerm: Long
-    
+
     @required
     found: Boolean
-    
+
     fields: FieldMap
     source: SourceMap
 }
@@ -58,7 +54,7 @@ structure GetResponse {
 structure MultiGetRequest {
     @required
     items: GetItemList
-    
+
     preference: String
     realtime: Boolean
     refresh: Boolean
@@ -68,10 +64,10 @@ structure MultiGetRequest {
 structure GetItem {
     @required
     index: String
-    
+
     @required
     id: String
-    
+
     routing: String
     storedFields: StringList
     fetchSource: FetchSourceContext

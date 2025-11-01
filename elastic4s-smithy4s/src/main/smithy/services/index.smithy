@@ -1,13 +1,6 @@
 $version: "2"
 
-namespace com.sksamuel.elastic4s.smithy.services
-
-use com.sksamuel.elastic4s.smithy.indices#DeleteIndexResponse
-use com.sksamuel.elastic4s.smithy.indices#OpenIndexResponse
-use com.sksamuel.elastic4s.smithy.indices#CloseIndexResponse
-use com.sksamuel.elastic4s.smithy.indices#IndexStatsResponse
-use com.sksamuel.elastic4s.smithy.alias#GetAliasesResponse
-use com.sksamuel.elastic4s.smithy.alias#IndicesAliasesResponse
+namespace se.thanh.elastic4cats
 
 /// Elasticsearch Index Management Service
 @title("Elasticsearch Index Management API")
@@ -31,7 +24,7 @@ structure CreateIndexInput {
     @required
     @httpLabel
     index: String
-    
+
     @httpPayload
     body: Document
 }
@@ -117,7 +110,7 @@ structure GetIndexStatsInput {
     @required
     @httpLabel
     index: String
-    
+
     @httpQuery("metric")
     metric: String
 }
@@ -135,7 +128,7 @@ structure GetAliasesInput {
     @required
     @httpLabel
     index: String
-    
+
     @required
     @httpLabel
     alias: String
