@@ -78,6 +78,7 @@ operation DeletePipeline {
 
 /// HTTP-bound Simulate Pipeline Request
 structure SimulatePipelineInput {
+    @required
     @httpLabel
     id: String
 

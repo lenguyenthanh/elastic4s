@@ -74,7 +74,3 @@ operation ClearScroll {
     input: ClearScrollInput
     output: ClearScrollResponse
 }
-
-list StringList {
-    member: String
-}

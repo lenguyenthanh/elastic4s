@@ -87,7 +87,3 @@ structure ClearScrollResponse {
 list ScrollHitList {
     member: ScrollHit
 }
-
-list SortValueList {
-    member: Document
-}

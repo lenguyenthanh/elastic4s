@@ -114,7 +114,3 @@ structure DeleteByQueryResponse {
 
     failures: IndexFailureList
 }
-
-list StringList {
-    member: String
-}

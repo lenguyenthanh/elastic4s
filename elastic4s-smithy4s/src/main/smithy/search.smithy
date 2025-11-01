@@ -335,10 +335,6 @@ list SortList {
     member: Sort
 }
 
-list SortValueList {
-    member: Document
-}
-
 list InnerHitsList {
     member: InnerHits
 }

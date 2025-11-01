@@ -128,3 +128,7 @@ structure Retries {
     search: Integer
 }
 
+
+list SortValueList {
+    member: Document
+}

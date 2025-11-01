@@ -90,6 +90,7 @@ structure IndexDocumentInput {
     @httpLabel
     index: String
 
+    @required
     @httpLabel
     id: String
 
