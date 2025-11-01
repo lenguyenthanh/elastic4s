@@ -1,0 +1,16 @@
+{
+    "aggs": {
+        "grades_min": {
+            "min": {
+                "field": "grade",
+                "script": {
+                    "lang": "lua",
+                    "source": "doc['grade'].value",
+                    "params": {
+                        "apple": "bad"
+                    }
+                }
+            }
+        }
+    }
+}

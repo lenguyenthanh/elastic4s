@@ -1,0 +1,30 @@
+{
+    "mappings": {
+        "properties": {
+            "first_name": {
+                "type": "text",
+                "copy_to": [
+                    "full_name"
+                ]
+            },
+            "last_name": {
+                "type": "text",
+                "copy_to": [
+                    "full_name"
+                ]
+            },
+            "full_name": {
+                "type": "text"
+            }
+        },
+        "numeric_detection": true,
+        "dynamic": "true",
+        "_boost": {
+            "name": "myboost",
+            "null_value": 1.2
+        },
+        "_size": {
+            "enabled": true
+        }
+    }
+}

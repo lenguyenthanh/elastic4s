@@ -1,0 +1,17 @@
+{
+    "aggs": {
+        "grades_sum": {
+            "sum": {
+                "field": "grade",
+                "script": {
+                    "lang": "lua",
+                    "source": "doc['grade'].value",
+                    "params": {
+                        "classsize": "30",
+                        "room": "101A"
+                    }
+                }
+            }
+        }
+    }
+}

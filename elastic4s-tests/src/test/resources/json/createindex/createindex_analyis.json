@@ -1,0 +1,24 @@
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "standard": {
+                    "type": "standard",
+                    "stopwords": [
+                        "stop1",
+                        "stop2"
+                    ],
+                    "max_token_length": 255
+                },
+                "myAnalyzer1": {
+                    "type": "standard",
+                    "stopwords": [
+                        "the",
+                        "and"
+                    ],
+                    "max_token_length": 400
+                }
+            }
+        }
+    }
+}

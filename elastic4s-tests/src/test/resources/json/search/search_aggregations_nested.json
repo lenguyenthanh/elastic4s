@@ -1,0 +1,20 @@
+{
+    "aggs": {
+        "nested_agg": {
+            "nested": {
+                "path": "nested_obj"
+            },
+            "aggs": {
+                "my_nested_terms_agg": {
+                    "terms": {
+                        "field": "keyword",
+                        "execution_hint": "hinty",
+                        "collect_mode": "breadth_first",
+                        "min_doc_count": 12,
+                        "shard_min_doc_count": 4
+                    }
+                }
+            }
+        }
+    }
+}

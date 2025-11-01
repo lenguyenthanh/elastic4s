@@ -1,0 +1,18 @@
+{
+    "sort": [
+        {
+            "_script": {
+                "script": {
+                    "source": "document.score",
+                    "lang": "java"
+                },
+                "type": "number",
+                "order": "desc",
+                "mode": "min",
+                "nested": {
+                    "path": "a.b.c"
+                }
+            }
+        }
+    ]
+}

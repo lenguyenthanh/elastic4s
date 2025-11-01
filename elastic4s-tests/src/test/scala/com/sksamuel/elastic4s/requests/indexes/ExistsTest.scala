@@ -1,0 +1,40 @@
+package com.sksamuel.elastic4s.requests.indexes
+
+import com.sksamuel.elastic4s.testkit.DockerTests
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import scala.util.Try
+
+import com.sksamuel.elastic4s.requests.exists.ExistsRequest
+
+class ExistsTest extends AnyWordSpec with Matchers with DockerTests {
+
+  Try {
+    client.execute {
+      deleteIndex("exists")
+    }.await
+  }
+
+  client.execute {
+    createIndex("exists").mapping {
+      properties(textField("name"))
+    }
+  }.await
+
+  client.execute {
+    indexInto("exists").withId("a").fields("name" -> "Narcissus")
+  }.await
+
+  "an exists request" should {
+    "return true for an existing doc" in {
+      client.execute {
+        ExistsRequest("a", "exists")
+      }.await.result shouldBe true
+    }
+    "return false for non existing doc" in {
+      client.execute {
+        ExistsRequest("b", "exists")
+      }.await.result shouldBe false
+    }
+  }
+}

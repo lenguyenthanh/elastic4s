@@ -1,0 +1,11 @@
+{
+    "aggs": {
+        "years": {
+            "date_histogram": {
+                "fixed_interval": "1y",
+                "min_doc_count": 0,
+                "field": "date"
+            }
+        }
+    }
+}

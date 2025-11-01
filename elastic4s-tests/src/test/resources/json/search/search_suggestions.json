@@ -1,0 +1,24 @@
+{
+    "query": {
+        "term": {
+            "name": {
+                "value": "coldplay"
+            }
+        }
+    },
+    "suggest": {
+        "suggestion-1": {
+            "text": "clocks by culdpaly",
+            "term": {
+                "field": "name",
+                "max_edits": 2
+            }
+        },
+        "suggestion-2": {
+            "text": "aqualuck by jethro toll",
+            "term": {
+                "field": "name"
+            }
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "aggs": {
+        "my_filter_agg": {
+            "filter": {
+                "bool": {
+                    "must": [
+                        {
+                            "term": {
+                                "name": {
+                                    "value": "sammy"
+                                }
+                            }
+                        }
+                    ],
+                    "should": [
+                        {
+                            "term": {
+                                "location": {
+                                    "value": "oxford"
+                                }
+                            }
+                        }
+                    ],
+                    "must_not": [
+                        {
+                            "term": {
+                                "type": {
+                                    "value": "rap"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

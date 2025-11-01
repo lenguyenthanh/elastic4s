@@ -1,0 +1,8 @@
+{
+    "type": "synonym",
+    "synonyms_path": "analysis/synonyms.txt",
+    "format": "solr",
+    "updateable": true,
+    "expand": true,
+    "lenient": true
+}

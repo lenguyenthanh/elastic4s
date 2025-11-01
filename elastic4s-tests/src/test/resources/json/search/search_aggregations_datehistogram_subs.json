@@ -1,0 +1,23 @@
+{
+    "aggs": {
+        "days": {
+            "date_histogram": {
+                "calendar_interval": "1d",
+                "field": "date"
+            },
+            "aggs": {
+                "keywords": {
+                    "terms": {
+                        "field": "keyword",
+                        "size": 5
+                    }
+                },
+                "countries": {
+                    "terms": {
+                        "field": "country"
+                    }
+                }
+            }
+        }
+    }
+}

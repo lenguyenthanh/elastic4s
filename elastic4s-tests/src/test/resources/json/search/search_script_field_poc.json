@@ -1,0 +1,22 @@
+{
+    "query": {
+        "match_all": {}
+    },
+    "script_fields": {
+        "balance": {
+            "script": {
+                "lang": "native",
+                "source": "portfolioscript",
+                "params": {
+                    "fieldName": "rate_of_return"
+                }
+            }
+        },
+        "date": {
+            "script": {
+                "lang": "groovy",
+                "source": "doc['date'].value"
+            }
+        }
+    }
+}

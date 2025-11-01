@@ -1,0 +1,15 @@
+{
+    "query": {
+        "has_parent": {
+            "parent_type": "sometype",
+            "query": {
+                "simple_query_string": {
+                    "query": "coldplay"
+                }
+            },
+            "score": true,
+            "boost": 1.2
+        }
+    },
+    "size": 5
+}

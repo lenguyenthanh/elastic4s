@@ -1,0 +1,11 @@
+{
+    "type": "synonym_graph",
+    "synonyms": [
+        "british,english",
+        "queen,monarch"
+    ],
+    "format": "solr",
+    "updateable": true,
+    "expand": true,
+    "lenient": true
+}

@@ -1,0 +1,15 @@
+{
+    "query": {
+        "query_string": {
+            "query": "coldplay"
+        }
+    },
+    "indices_boost": [
+        {
+            "index1": 1.4
+        },
+        {
+            "index2": 1.3
+        }
+    ]
+}

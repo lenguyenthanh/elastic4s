@@ -1,0 +1,28 @@
+{
+    "mappings": {
+        "numeric_detection": true,
+        "dynamic": "strict",
+        "_boost": {
+            "name": "myboost",
+            "null_value": 1.2
+        },
+        "_size": {
+            "enabled": true
+        },
+        "properties": {
+            "title": {
+                "type": "text",
+                "copy_to": [
+                    "meta_data",
+                    "article_info"
+                ]
+            },
+            "meta_data": {
+                "type": "text"
+            },
+            "article_info": {
+                "type": "text"
+            }
+        }
+    }
+}

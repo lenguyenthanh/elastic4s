@@ -1,0 +1,15 @@
+{
+    "post_filter": {
+        "nested": {
+            "path": "singer",
+            "score_mode": "min",
+            "query": {
+                "term": {
+                    "name": {
+                        "value": "chris"
+                    }
+                }
+            }
+        }
+    }
+}

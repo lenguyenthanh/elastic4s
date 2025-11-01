@@ -1,0 +1,14 @@
+{
+    "facets": {
+        "years": {
+            "histogram": {
+                "key_field": "mykey",
+                "value_field": "myvalue",
+                "interval": 100,
+                "comparator": "count"
+            },
+            "nested": "nested-path",
+            "global": true
+        }
+    }
+}

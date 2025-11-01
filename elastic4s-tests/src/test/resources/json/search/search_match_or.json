@@ -1,0 +1,12 @@
+{
+    "query": {
+        "match": {
+            "drummmer": {
+                "query": "will",
+                "boost": 4.0,
+                "operator": "OR"
+            }
+        }
+    },
+    "size": 5
+}

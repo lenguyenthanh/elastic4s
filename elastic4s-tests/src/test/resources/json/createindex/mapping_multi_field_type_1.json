@@ -1,0 +1,17 @@
+{
+    "mappings": {
+        "properties": {
+            "name": {
+                "type": "text",
+                "fields": {
+                    "username": {
+                        "type": "keyword"
+                    },
+                    "principal": {
+                        "type": "keyword"
+                    }
+                }
+            }
+        }
+    }
+}

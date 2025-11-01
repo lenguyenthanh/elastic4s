@@ -1,0 +1,13 @@
+{
+    "aggs": {
+        "grades_avg": {
+            "avg": {
+                "field": "grade",
+                "script": {
+                    "lang": "lua",
+                    "source": "doc['grade'].value"
+                }
+            }
+        }
+    }
+}

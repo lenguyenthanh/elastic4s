@@ -1,0 +1,199 @@
+package com.sksamuel.elastic4s.analysis
+
+import com.sksamuel.elastic4s.JsonSugar
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
+class TokenFilterTest extends AnyWordSpec with Matchers with JsonSugar {
+  "ElisionTokenFilter" should {
+    "build json" in {
+      ElisionTokenFilter(
+        name = "my_elision",
+        articles = Seq("a", "b"),
+        articlesPath = Some("/abc"),
+        articlesCase = Some(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/elisiontokenfilter_raw.json")
+    }
+  }
+  "KeepWordstoken" should {
+    "build json" in {
+      KeepWordsTokenFilter(
+        name = "my_keep_words",
+        keepWords = Seq("a", "b"),
+        keepWordsPath = Some("/abc"),
+        keepWordsCase = Some(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/keepwordstokenfilter_raw.json")
+    }
+  }
+  "SynonymTokenFilter" should {
+    "build json with synonyms set" in {
+      SynonymTokenFilter(
+        name = "my_synonym",
+        format = Option("solr"),
+        expand = Option(true),
+        updateable = Option(true),
+        lenient = Option(true),
+        synonymsSet = Option("my_synonyms_set")
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/synonymtokenfilter_set_raw.json")
+    }
+    "build json with path" in {
+      SynonymTokenFilter(
+        name = "my_synonym",
+        path = Option("analysis/synonyms.txt"),
+        format = Option("solr"),
+        expand = Option(true),
+        updateable = Option(true),
+        lenient = Option(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/synonymtokenfilter_path_raw.json")
+    }
+    "build json with synonyms" in {
+      SynonymTokenFilter(
+        name = "my_synonym",
+        synonyms = Set("british,english", "queen,monarch"),
+        format = Option("solr"),
+        expand = Option(true),
+        updateable = Option(true),
+        lenient = Option(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/synonymtokenfilter_synonyms_raw.json")
+    }
+  }
+
+  "SynonymGraphTokenFilter" should {
+    "build json with synonyms set" in {
+      SynonymGraphTokenFilter(
+        name = "my_synonym",
+        format = Option("solr"),
+        expand = Option(true),
+        updateable = Option(true),
+        lenient = Option(true),
+        synonymsSet = Option("my_synonyms_set")
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/synonymgraphtokenfilter_set_raw.json")
+    }
+    "build json with path" in {
+      SynonymGraphTokenFilter(
+        name = "my_synonym",
+        path = Option("analysis/synonyms.txt"),
+        format = Option("solr"),
+        expand = Option(true),
+        updateable = Option(true),
+        lenient = Option(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/synonymgraphtokenfilter_path_raw.json")
+    }
+    "build json with synonyms" in {
+      SynonymGraphTokenFilter(
+        name = "my_synonym",
+        synonyms = Set("british,english", "queen,monarch"),
+        format = Option("solr"),
+        expand = Option(true),
+        updateable = Option(true),
+        lenient = Option(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/synonymgraphtokenfilter_synonyms_raw.json")
+    }
+  }
+
+  "WordDelimiterGraphTokenFilter" should {
+    "build json" in {
+      WordDelimiterGraphTokenFilter(
+        adjustOffsets = Option(true),
+        name = "my_word_delimiter_graph",
+        preserveOriginal = Option(true),
+        catenateNumbers = Option(true),
+        catenateWords = Option(true),
+        catenateAll = Option(true),
+        generateWordParts = Option(true),
+        generateNumberParts = Option(true),
+        ignoreKeywords = Option(true),
+        protectedWordsPath = Option("my_protected_words.txt"),
+        splitOnCaseChange = Option(true),
+        splitOnNumerics = Option(true),
+        stemEnglishPossessive = Option(true),
+        typeTablePath = Option("my_table_path.txt")
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/worddelimitergraphtokenfilter_raw.json")
+    }
+  }
+
+  "WordDelimiterTokenFilter" should {
+    "build json" in {
+      WordDelimiterTokenFilter(
+        name = "my_word_delimiter",
+        preserveOriginal = Option(true),
+        catenateNumbers = Option(true),
+        catenateWords = Option(true),
+        catenateAll = Option(true),
+        generateWordParts = Option(true),
+        generateNumberParts = Option(true),
+        protectedWordsPath = Option("my_protected_words.txt"),
+        splitOnCaseChange = Option(true),
+        splitOnNumerics = Option(true),
+        stemEnglishPossesive = Option(true),
+        typeTablePath = Option("my_table_path.txt")
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/worddelimitertokenfilter_raw.json")
+    }
+  }
+
+  "PatternReplaceTokenFilter" should {
+    "build json" in {
+      PatternReplaceTokenFilter(
+        name = "my_pattern_replace",
+        pattern = "[£|€]",
+        replacement = "",
+        all = Some(false)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/patternreplacetokenfilter_raw.json")
+    }
+  }
+
+  "EdgeNGramTokenFilter" should {
+    "build json" in {
+      EdgeNGramTokenFilter(
+        name = "my_edge_ngram",
+        minGram = 2,
+        maxGram = 5,
+        side = Some("back"),
+        preserveOriginal = Option(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/edgengramtokenfilter_raw.json")
+    }
+  }
+
+  "NGramTokenFilter" should {
+    "build json" in {
+      NGramTokenFilter(
+        name = "my_ngram",
+        minGram = Some(2),
+        maxGram = Some(5),
+        preserveOriginal = Option(true)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/ngramtokenfilter_raw.json")
+    }
+  }
+
+  "ReverseTokenFilter" should {
+    "build json" in {
+      ReverseTokenFilter(
+        name = "my_reverse"
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/reversetokenfilter_raw.json")
+    }
+  }
+
+  "StopTokenFilter" should {
+    "build json" in {
+      StopTokenFilter(
+        name = "my_stop",
+        language = None,
+        stopwords = List("a", "an"),
+        stopwordsPath = None,
+        removeTrailing = Some(true),
+        ignoreCase = Some(false)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/stoptokenfilter_raw.json")
+    }
+    "build json with deprecated constructor" in {
+      StopTokenFilter(
+        name = "my_stop",
+        language = None,
+        stopwords = List("a", "an"),
+        stopwordsPath = None,
+        enablePositionIncrements = Some(false),
+        removeTrailing = Some(true),
+        ignoreCase = Some(false)
+      ).build.string should matchJsonResource("/json/analysis/tokenfilter/stoptokenfilter_raw.json")
+    }
+  }
+}

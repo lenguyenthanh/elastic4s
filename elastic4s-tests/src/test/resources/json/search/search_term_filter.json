@@ -1,0 +1,10 @@
+{
+    "post_filter": {
+        "term": {
+            "singer": {
+                "_name": "namey",
+                "value": "chris martin"
+            }
+        }
+    }
+}

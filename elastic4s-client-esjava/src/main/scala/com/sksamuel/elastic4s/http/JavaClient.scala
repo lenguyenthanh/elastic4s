@@ -1,0 +1,182 @@
+package com.sksamuel.elastic4s.http
+
+import java.io.InputStream
+import java.nio.charset.StandardCharsets
+import java.util.zip.GZIPInputStream
+import com.sksamuel.elastic4s.{
+  ElasticNodeEndpoint,
+  ElasticProperties,
+  ElasticRequest,
+  HttpClient,
+  HttpEntity,
+  HttpResponse,
+  Show
+}
+import org.apache.http.HttpHost
+import org.apache.http.client.config.RequestConfig
+import org.apache.http.entity.{
+  AbstractHttpEntity,
+  ByteArrayEntity,
+  ContentType,
+  FileEntity,
+  InputStreamEntity,
+  StringEntity
+}
+import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
+import org.elasticsearch.client.RestClientBuilder.{HttpClientConfigCallback, RequestConfigCallback}
+import org.elasticsearch.client.{Request, ResponseException, ResponseListener, RestClient}
+import org.slf4j.{Logger, LoggerFactory}
+
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.io.{Codec, Source}
+
+case class JavaClientExceptionWrapper(t: Throwable) extends RuntimeException(t)
+
+/** An implementation of HttpClient that wraps the Elasticsearch Java Rest Client
+  */
+class JavaClient(client: RestClient)(implicit ec: ExecutionContext) extends HttpClient[Future] {
+
+  def apacheEntity(entity: HttpEntity): AbstractHttpEntity = entity match {
+    case e: HttpEntity.StringEntity      =>
+      logger.debug(e.content)
+      new StringEntity(e.content, ContentType.APPLICATION_JSON)
+    case e: HttpEntity.ByteArrayEntity   =>
+      new ByteArrayEntity(e.content, ContentType.APPLICATION_JSON)
+    case e: HttpEntity.InputStreamEntity =>
+      logger.debug(e.content.toString)
+      new InputStreamEntity(e.content, ContentType.APPLICATION_JSON)
+    case e: HttpEntity.FileEntity        =>
+      logger.debug(e.content.toString)
+      new FileEntity(e.content, ContentType.APPLICATION_JSON)
+  }
+
+  def fromResponse(r: org.elasticsearch.client.Response): HttpResponse = {
+    val entity  = Option(r.getEntity).map { entity =>
+      val contentCharset        = Option(
+        Option(ContentType.get(entity)).fold(StandardCharsets.UTF_8)(_.getCharset)
+      ).getOrElse(StandardCharsets.UTF_8)
+      implicit val codec: Codec = Codec(contentCharset)
+
+      val contentStream: InputStream = {
+        if (isEntityGziped(entity)) new GZIPInputStream(entity.getContent)
+        else entity.getContent
+      }
+
+      val body = Source.fromInputStream(contentStream).mkString
+      HttpEntity.StringEntity(body, Some(contentCharset.name()))
+    }
+    val headers = r.getHeaders.map { header =>
+      header.getName -> header.getValue
+    }.toMap
+    logger.debug("Http Response {}", r)
+    HttpResponse(r.getStatusLine.getStatusCode, entity, headers)
+  }
+
+  override def send(req: ElasticRequest): Future[HttpResponse] = {
+    if (logger.isDebugEnabled) {
+      logger.debug("Executing elastic request {}", Show[ElasticRequest].show(req))
+    }
+
+    val promise = Promise[HttpResponse]()
+
+    val l = new ResponseListener {
+      override def onSuccess(r: org.elasticsearch.client.Response): Unit = promise.success(fromResponse(r))
+      override def onFailure(e: Exception): Unit                         = e match {
+        case re: ResponseException => promise.success(fromResponse(re.getResponse))
+        case t                     => promise.failure(JavaClientExceptionWrapper(t))
+      }
+    }
+
+    val request    = new Request(req.method, req.endpoint)
+    req.params.foreach { case (key, value) => request.addParameter(key, value) }
+    req.entity.map(apacheEntity).foreach(request.setEntity)
+    val optBuilder = request.getOptions.toBuilder
+    req.headers.foreach((optBuilder.addHeader _).tupled)
+    request.setOptions(optBuilder)
+    client.performRequestAsync(request, l)
+
+    promise.future
+  }
+
+  override def close(): Future[Unit] = Future(client.close())
+
+  private def isEntityGziped(entity: org.apache.http.HttpEntity): Boolean = {
+    Option(entity.getContentEncoding).flatMap(x => Option(x.getValue)).contains("gzip")
+  }
+}
+
+object JavaClient {
+
+  protected val logger: Logger = LoggerFactory.getLogger(getClass.getName)
+
+  /** Creates a new [[ElasticClient]] from an existing Elasticsearch Java API [[RestClient]].
+    *
+    * @param client
+    *   the Java client to wrap
+    * @return
+    *   newly created Scala client
+    */
+  def fromRestClient(client: RestClient)(implicit ec: ExecutionContext): JavaClient = new JavaClient(client)
+
+  /** Creates a new [[ElasticClient]] using the elasticsearch Java API rest client as the underlying client. Optional
+    * callbacks can be passed in to configure the client.
+    */
+  def apply(props: ElasticProperties)(implicit ec: ExecutionContext): JavaClient =
+    apply(props, NoOpRequestConfigCallback, NoOpHttpClientConfigCallback)
+
+  /** Creates a new [[ElasticClient]] using the elasticsearch Java API rest client as the underlying client. Optional
+    * callbacks can be passed in to configure the client.
+    */
+  def apply(props: ElasticProperties, requestConfigCallback: RequestConfigCallback)(implicit
+      ec: ExecutionContext
+  ): JavaClient =
+    apply(props, requestConfigCallback, NoOpHttpClientConfigCallback)
+
+  /** Creates a new [[ElasticClient]] using the elasticsearch Java API rest client as the underlying client. Optional
+    * callbacks can be passed in to configure the client.
+    */
+  def apply(props: ElasticProperties, httpClientConfigCallback: HttpClientConfigCallback)(implicit
+      ec: ExecutionContext
+  ): JavaClient =
+    apply(props, NoOpRequestConfigCallback, httpClientConfigCallback)
+
+  /** Creates a new [[ElasticClient]] using the elasticsearch Java API rest client as the underlying client. Optional
+    * callbacks can be passed in to configure the client.
+    */
+  def apply(
+      props: ElasticProperties,
+      requestConfigCallback: RequestConfigCallback,
+      httpClientConfigCallback: HttpClientConfigCallback
+  )(implicit ec: ExecutionContext): JavaClient = {
+    val hosts = props.endpoints.map {
+      case ElasticNodeEndpoint(protocol, host, port, _) => new HttpHost(host, port, protocol)
+    }
+    logger.info(s"Creating HTTP client on ${hosts.mkString(",")}")
+
+    val client = RestClient
+      .builder(hosts: _*)
+      .setRequestConfigCallback(requestConfigCallback)
+      .setHttpClientConfigCallback(httpClientConfigCallback)
+      .build()
+
+    fromRestClient(client)
+  }
+}
+
+/** RequestConfigCallback that performs a no-op on the given RequestConfig.Builder.
+  *
+  * Used as a default parameter to the HttpClient when no custom request configuration is needed.
+  */
+object NoOpRequestConfigCallback extends RequestConfigCallback {
+  override def customizeRequestConfig(requestConfigBuilder: RequestConfig.Builder): RequestConfig.Builder =
+    requestConfigBuilder
+}
+
+/** HttpAsyncClientBuilder that performs a no-op on the given HttpAsyncClientBuilder
+  *
+  * Used as a default parameter to the HttpClient when no custom HttpAsync configuration is needed.
+  */
+object NoOpHttpClientConfigCallback extends HttpClientConfigCallback {
+  override def customizeHttpClient(httpClientBuilder: HttpAsyncClientBuilder): HttpAsyncClientBuilder =
+    httpClientBuilder
+}

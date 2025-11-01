@@ -1,0 +1,12 @@
+{
+    "query": {
+        "wildcard": {
+            "name": {
+                "value": "*coldplay",
+                "rewrite": "no",
+                "boost": 7.6
+            }
+        }
+    },
+    "size": 5
+}

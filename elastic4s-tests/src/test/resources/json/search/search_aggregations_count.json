@@ -1,0 +1,13 @@
+{
+    "aggs": {
+        "grades_count": {
+            "value_count": {
+                "field": "grade",
+                "script": {
+                    "lang": "lua",
+                    "source": "doc['grade'].value"
+                }
+            }
+        }
+    }
+}

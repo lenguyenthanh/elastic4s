@@ -1,0 +1,9 @@
+{
+    "post_filter": {
+        "regexp": {
+            "singer": {
+                "value": "chris martin"
+            }
+        }
+    }
+}

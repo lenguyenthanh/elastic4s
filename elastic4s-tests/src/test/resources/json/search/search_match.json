@@ -1,0 +1,20 @@
+{
+    "query": {
+        "match": {
+            "name": {
+                "query": "coldplay",
+                "analyzer": "french",
+                "auto_generate_synonyms_phrase_query": false,
+                "cutoff_frequency": "3.4",
+                "fuzziness": "2",
+                "fuzzy_transpositions": true,
+                "max_expansions": 4,
+                "minimum_should_match": "75%",
+                "operator": "AND",
+                "prefix_length": "4",
+                "zero_terms_query": "all"
+            }
+        }
+    },
+    "size": 5
+}

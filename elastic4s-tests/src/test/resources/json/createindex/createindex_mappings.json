@@ -1,0 +1,36 @@
+{
+    "mappings": {
+        "_all": {
+            "enabled": true
+        },
+        "dynamic_date_formats": [
+            "mm/yyyy",
+            "dd-MM-yyyy"
+        ],
+        "date_detection": true,
+        "_analyzer": {
+            "path": "somefield"
+        },
+        "properties": {
+            "name": {
+                "type": "ip",
+                "boost": 1.0
+            },
+            "location": {
+                "type": "integer",
+                "null_value": 0
+            },
+            "email": {
+                "type": "binary"
+            },
+            "age": {
+                "type": "float"
+            },
+            "area": {
+                "type": "geo_shape",
+                "tree": "quadtree",
+                "precision": "1m"
+            }
+        }
+    }
+}

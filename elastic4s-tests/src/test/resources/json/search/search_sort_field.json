@@ -1,0 +1,14 @@
+{
+    "sort": [
+        {
+            "singer": {
+                "order": "desc",
+                "missing": "no-singer",
+                "mode": "avg",
+                "nested": {
+                    "path": "nest"
+                }
+            }
+        }
+    ]
+}

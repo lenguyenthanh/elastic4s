@@ -1,0 +1,57 @@
+{
+    "mappings": {
+        "numeric_detection": true,
+        "_boost": {
+            "name": "myboost",
+            "null_value": 1.2
+        },
+        "_size": {
+            "enabled": true
+        },
+        "properties": {
+            "_id": {
+                "type": "text",
+                "analyzer": "keyword"
+            },
+            "name": {
+                "type": "text",
+                "analyzer": "keyword"
+            },
+            "locations": {
+                "type": "geo_point",
+                "doc_values": true
+            },
+            "date": {
+                "type": "date"
+            },
+            "size": {
+                "type": "long"
+            },
+            "read": {
+                "type": "boolean"
+            },
+            "content": {
+                "type": "text"
+            },
+            "user": {
+                "type": "nested",
+                "properties": {
+                    "name": {
+                        "type": "text"
+                    },
+                    "email": {
+                        "type": "text"
+                    },
+                    "last": {
+                        "type": "nested",
+                        "properties": {
+                            "lastLogin": {
+                                "type": "date"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

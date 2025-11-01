@@ -1,0 +1,24 @@
+{
+    "post_filter": {
+        "bool": {
+            "should": [
+                {
+                    "geo_distance": {
+                        "distance": "geo1234",
+                        "distance_type": "plane"
+                    }
+                }
+            ],
+            "must_not": [
+                {
+                    "geo_distance": {
+                        "distance": [
+                            76.6,
+                            45.4
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

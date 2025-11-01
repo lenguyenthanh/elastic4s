@@ -1,0 +1,10 @@
+{
+    "aggs": {
+        "score_histogram": {
+            "histogram": {
+                "interval": 2.0,
+                "field": "score"
+            }
+        }
+    }
+}

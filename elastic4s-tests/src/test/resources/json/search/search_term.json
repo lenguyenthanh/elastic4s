@@ -1,0 +1,11 @@
+{
+    "size": 5,
+    "query": {
+        "term": {
+            "singer": {
+                "value": "chris martin",
+                "boost": 1.6
+            }
+        }
+    }
+}
