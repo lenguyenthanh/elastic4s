@@ -31,27 +31,27 @@ The module contains Smithy specifications in `src/main/smithy/` that define:
   - Pipeline operations: Ingest (`ingest.smithy`)
   - Script operations: Script (`script.smithy`)
   - Task operations: Task (`task.smithy`)
-- **Service definitions**: HTTP-bound service definitions in `services/` directory
-  - `services/document.smithy`: ElasticsearchDocumentService
-  - `services/search.smithy`: ElasticsearchSearchService
-  - `services/index.smithy`: ElasticsearchIndexService
-  - `services/cluster.smithy`: ElasticsearchClusterService
+- **Service definitions**: Unified HTTP-bound service definition in `services/` directory
+  - `services/elastic.smithy`: ElasticService - Unified service with all 42 Elasticsearch operations
 
-## Smithy Services
+## Smithy Service
 
-The module includes HTTP-bound Smithy service definitions that map operations to HTTP endpoints:
+The module includes a unified HTTP-bound Smithy service definition (`ElasticService`) that maps all Elasticsearch operations to HTTP endpoints:
 
-### ElasticsearchDocumentService
+### ElasticService (42 operations)
+
+**Document Operations** (4):
 - `GetDocument` - GET /{index}/_doc/{id}
+- `IndexDocument` - POST /{index}/_doc/{id}
 - `MultiGetDocuments` - POST /_mget
 - `CountDocuments` - POST /_count
 
-### ElasticsearchSearchService
+**Search Operations** (3):
 - `Search` - POST /{index}/_search
 - `SearchScroll` - POST /_search/scroll/{scrollId}
 - `ClearScroll` - DELETE /_search/scroll
 
-### ElasticsearchIndexService
+**Index Management Operations** (9):
 - `CreateIndex` - PUT /{index}
 - `DeleteIndex` - DELETE /{index}
 - `OpenIndex` - POST /{index}/_open
@@ -62,9 +62,48 @@ The module includes HTTP-bound Smithy service definitions that map operations to
 - `GetAliases` - GET /{index}/_alias/{alias}
 - `UpdateAliases` - POST /_aliases
 
-### ElasticsearchClusterService
+**Cluster Operations** (2):
 - `GetClusterHealth` - GET /_cluster/health
 - `GetClusterStats` - GET /_cluster/stats
+
+**Update Operations** (2):
+- `UpdateDocument` - POST /{index}/_update/{id}
+- `UpdateByQuery` - POST /{index}/_update_by_query
+
+**Bulk Operations** (1):
+- `BulkOperations` - POST /_bulk
+
+**Delete Operations** (2):
+- `DeleteDocument` - DELETE /{index}/_doc/{id}
+- `DeleteByQuery` - POST /{index}/_delete_by_query
+
+**Snapshot Operations** (7):
+- `CreateRepository` - PUT /_snapshot/{repository}
+- `GetRepository` - GET /_snapshot/{repository}
+- `DeleteRepository` - DELETE /_snapshot/{repository}
+- `CreateSnapshot` - PUT /_snapshot/{repository}/{snapshot}
+- `GetSnapshot` - GET /_snapshot/{repository}/{snapshot}
+- `DeleteSnapshot` - DELETE /_snapshot/{repository}/{snapshot}
+- `RestoreSnapshot` - POST /_snapshot/{repository}/{snapshot}/_restore
+
+**Reindex Operations** (1):
+- `Reindex` - POST /_reindex
+
+**Ingest Pipeline Operations** (4):
+- `PutPipeline` - PUT /_ingest/pipeline/{id}
+- `GetPipeline` - GET /_ingest/pipeline/{id}
+- `DeletePipeline` - DELETE /_ingest/pipeline/{id}
+- `SimulatePipeline` - POST /_ingest/pipeline/{id}/_simulate
+
+**Script Management Operations** (3):
+- `PutStoredScript` - PUT /_scripts/{id}
+- `GetStoredScript` - GET /_scripts/{id}
+- `DeleteStoredScript` - DELETE /_scripts/{id}
+
+**Task Management Operations** (3):
+- `ListTasks` - GET /_tasks
+- `GetTask` - GET /_tasks/{taskId}
+- `CancelTask` - POST /_tasks/{taskId}/_cancel
 
 ## Usage
 
@@ -76,26 +115,35 @@ libraryDependencies += "nl.gn0s1s" %% "elastic4s-smithy4s" % elastic4sVersion
 
 The generated Scala code will be available in the `com.sksamuel.elastic4s.smithy.*` packages.
 
-Example usage with service:
+Example usage with unified service:
 
 ```scala
-import com.sksamuel.elastic4s.smithy.services._
+import se.thanh.elastic4cats._
 import smithy4s.http4s.SimpleRestJsonBuilder
 
-// The generated service trait can be used with smithy4s HTTP libraries
-val service: ElasticsearchDocumentService[F] = ???
+// The generated ElasticService trait can be used with smithy4s HTTP libraries
+val service: ElasticService[F] = ???
+
+// All 42 operations are available through a single service interface
+service.getDocument(GetDocumentInput(index = "myindex", id = "doc123"))
+service.search(SearchInput(index = "myindex", body = searchQuery))
+service.bulkOperations(BulkOperationsInput(body = bulkRequest))
 ```
 
 Example usage with generated types:
 
 ```scala
-import com.sksamuel.elastic4s.smithy.get.GetRequest
-import com.sksamuel.elastic4s.smithy.common.RefreshPolicy
+import se.thanh.elastic4cats._
 
-val getRequest = GetRequest(
+val getRequest = GetDocumentInput(
   index = "myindex",
   id = "doc123",
   refresh = Some(true)
+)
+
+val searchRequest = SearchInput(
+  index = "products",
+  body = searchQuery
 )
 ```
 
