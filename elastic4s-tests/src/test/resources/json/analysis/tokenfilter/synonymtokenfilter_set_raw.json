@@ -1,8 +1,0 @@
-{
-    "type": "synonym",
-    "synonyms_set": "my_synonyms_set",
-    "format": "solr",
-    "updateable": true,
-    "expand": true,
-    "lenient": true
-}

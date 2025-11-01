@@ -1,9 +1,0 @@
-{
-    "query": {
-        "match_all": {}
-    },
-    "docvalue_fields": [
-        "field1",
-        "field2"
-    ]
-}

@@ -1,7 +1,0 @@
-{
-    "post_filter": {
-        "type": {
-            "value": "sometype"
-        }
-    }
-}

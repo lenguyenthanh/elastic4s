@@ -1,9 +1,0 @@
-{
-    "aggs": {
-        "grades_extendedstats": {
-            "extended_stats": {
-                "field": "grade"
-            }
-        }
-    }
-}

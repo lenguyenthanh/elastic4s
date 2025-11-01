@@ -1,8 +1,0 @@
-{
-  "weight": 1.5,
-  "filter": {
-    "match_all": {
-      "boost": 1.0
-    }
-  }
-}

@@ -1,9 +1,0 @@
-{
-    "aggs": {
-        "geo_agg": {
-            "geo_bounds": {
-                "field": "geo_point"
-            }
-        }
-    }
-}

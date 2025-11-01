@@ -1,9 +1,0 @@
-{
-    "es": {
-        "match_pattern": "*_es",
-        "mapping": {
-            "type": "{dynamic_type}",
-            "doc_values": false
-        }
-    }
-}
