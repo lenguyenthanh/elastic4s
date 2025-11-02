@@ -105,6 +105,7 @@ structure GetDocumentInput {
 /// Get a single document by ID
 @http(method: "GET", uri: "/{index}/_doc/{id}")
 @readonly
+@externalDocumentation("Elasticsearch Get API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html")
 operation GetDocument {
     input: GetDocumentInput
     output: GetResponse
@@ -128,6 +129,7 @@ structure MultiGetDocumentsInput {
 
 /// Get multiple documents in a single request
 @http(method: "POST", uri: "/_mget")
+@externalDocumentation("Elasticsearch Multi Get API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-get.html")
 operation MultiGetDocuments {
     input: MultiGetDocumentsInput
     output: MultiGetResponse
@@ -144,6 +146,7 @@ structure CountDocumentsInput {
 
 /// Count documents matching a query
 @http(method: "POST", uri: "/_count")
+@externalDocumentation("Elasticsearch Count API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html")
 operation CountDocuments {
     input: CountDocumentsInput
     output: CountResponse
@@ -181,6 +184,7 @@ structure IndexDocumentInput {
 
 /// Index a document
 @http(method: "POST", uri: "/{index}/_doc/{id}")
+@externalDocumentation("Elasticsearch Index API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html")
 operation IndexDocument {
     input: IndexDocumentInput
     output: IndexResponse
@@ -215,6 +219,7 @@ structure SearchInput {
 
 /// Search for documents
 @http(method: "POST", uri: "/{index}/_search")
+@externalDocumentation("Elasticsearch Search API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
 operation Search {
     input: SearchInput
     output: SearchResponse
@@ -232,6 +237,7 @@ structure SearchScrollInput {
 
 /// Continue scrolling through search results
 @http(method: "POST", uri: "/_search/scroll/{scrollId}")
+@externalDocumentation("Elasticsearch Scroll API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html#scroll-search-results")
 operation SearchScroll {
     input: SearchScrollInput
     output: SearchScrollResponse
@@ -247,6 +253,7 @@ structure ClearScrollInput {
 /// Clear scroll contexts
 @http(method: "DELETE", uri: "/_search/scroll")
 @idempotent
+@externalDocumentation("Elasticsearch Clear Scroll API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html")
 operation ClearScroll {
     input: ClearScrollInput
     output: ClearScrollResponse
@@ -284,6 +291,7 @@ structure CreateIndexResponse {
 /// Create a new index
 @http(method: "PUT", uri: "/{index}")
 @idempotent
+@externalDocumentation("Elasticsearch Create Index API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html")
 operation CreateIndex {
     input: CreateIndexInput
     output: CreateIndexResponse
@@ -305,6 +313,7 @@ structure DeleteIndexInput {
 /// Delete an index
 @http(method: "DELETE", uri: "/{index}")
 @idempotent
+@externalDocumentation("Elasticsearch Delete Index API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html")
 operation DeleteIndex {
     input: DeleteIndexInput
     output: DeleteIndexResponse
@@ -328,6 +337,7 @@ structure OpenIndexInput {
 
 /// Open a closed index
 @http(method: "POST", uri: "/{index}/_open")
+@externalDocumentation("Elasticsearch Open Index API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html")
 operation OpenIndex {
     input: OpenIndexInput
     output: OpenIndexResponse
@@ -348,6 +358,7 @@ structure CloseIndexInput {
 
 /// Close an index
 @http(method: "POST", uri: "/{index}/_close")
+@externalDocumentation("Elasticsearch Close Index API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html")
 operation CloseIndex {
     input: CloseIndexInput
     output: CloseIndexResponse
@@ -362,6 +373,7 @@ structure RefreshIndexInput {
 
 /// Refresh an index
 @http(method: "POST", uri: "/{index}/_refresh")
+@externalDocumentation("Elasticsearch Refresh API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html")
 operation RefreshIndex {
     input: RefreshIndexInput
 }
@@ -381,6 +393,7 @@ structure FlushIndexInput {
 
 /// Flush an index
 @http(method: "POST", uri: "/{index}/_flush")
+@externalDocumentation("Elasticsearch Flush API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-flush.html")
 operation FlushIndex {
     input: FlushIndexInput
     output: FlushIndexResponse
@@ -403,6 +416,7 @@ structure GetIndexStatsInput {
 /// Get index statistics
 @http(method: "GET", uri: "/{index}/_stats")
 @readonly
+@externalDocumentation("Elasticsearch Index Stats API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html")
 operation GetIndexStats {
     input: GetIndexStatsInput
     output: IndexStatsResponse
@@ -422,6 +436,7 @@ structure GetAliasesInput {
 /// Get index aliases
 @http(method: "GET", uri: "/{index}/_alias/{alias}")
 @readonly
+@externalDocumentation("Elasticsearch Get Alias API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-alias.html")
 operation GetAliases {
     input: GetAliasesInput
     output: GetAliasesResponse
@@ -442,6 +457,7 @@ structure UpdateAliasesInput {
 
 /// Update index aliases
 @http(method: "POST", uri: "/_aliases")
+@externalDocumentation("Elasticsearch Update Aliases API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html")
 operation UpdateAliases {
     input: UpdateAliasesInput
     output: UpdateAliasesResponse
@@ -470,6 +486,7 @@ structure GetClusterHealthInput {
 /// Get cluster health
 @http(method: "GET", uri: "/_cluster/health")
 @readonly
+@externalDocumentation("Elasticsearch Cluster Health API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html")
 operation GetClusterHealth {
     input: GetClusterHealthInput
     output: ClusterHealthResponse
@@ -484,6 +501,7 @@ structure GetClusterStatsInput {
 /// Get cluster statistics
 @http(method: "GET", uri: "/_cluster/stats")
 @readonly
+@externalDocumentation("Elasticsearch Cluster Stats API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html")
 operation GetClusterStats {
     input: GetClusterStatsInput
     output: ClusterStatsResponse
@@ -525,6 +543,7 @@ structure UpdateDocumentInput {
 
 /// Update a document
 @http(method: "POST", uri: "/{index}/_update/{id}")
+@externalDocumentation("Elasticsearch Update API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html")
 operation UpdateDocument {
     input: UpdateDocumentInput
     output: UpdateResponse
@@ -555,6 +574,7 @@ structure UpdateByQueryInput {
 
 /// Update documents matching a query
 @http(method: "POST", uri: "/{index}/_update_by_query")
+@externalDocumentation("Elasticsearch Update By Query API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html")
 operation UpdateByQuery {
     input: UpdateByQueryInput
     output: UpdateByQueryResponse
@@ -591,6 +611,7 @@ structure BulkOperationsInput {
 
 /// Execute bulk operations
 @http(method: "POST", uri: "/_bulk")
+@externalDocumentation("Elasticsearch Bulk API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html")
 operation BulkOperations {
     input: BulkOperationsInput
     output: BulkResponse
@@ -626,6 +647,7 @@ structure DeleteDocumentInput {
 /// Delete a document by ID
 @http(method: "DELETE", uri: "/{index}/_doc/{id}")
 @idempotent
+@externalDocumentation("Elasticsearch Delete API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html")
 operation DeleteDocument {
     input: DeleteDocumentInput
     output: DeleteResponse
@@ -656,6 +678,7 @@ structure DeleteByQueryInput {
 
 /// Delete documents matching a query
 @http(method: "POST", uri: "/{index}/_delete_by_query")
+@externalDocumentation("Elasticsearch Delete By Query API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html")
 operation DeleteByQuery {
     input: DeleteByQueryInput
     output: DeleteByQueryResponse
@@ -692,6 +715,7 @@ structure CreateRepositoryResponse {
 /// Create a snapshot repository
 @http(method: "PUT", uri: "/_snapshot/{repository}")
 @idempotent
+@externalDocumentation("Elasticsearch Create Repository API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-create-repository.html")
 operation CreateRepository {
     input: CreateRepositoryInput
     output: CreateRepositoryResponse
@@ -713,6 +737,7 @@ structure GetRepositoryInput {
 /// Get snapshot repository information
 @http(method: "GET", uri: "/_snapshot/{repository}")
 @readonly
+@externalDocumentation("Elasticsearch Get Repository API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/get-snapshot-repo-api.html")
 operation GetRepository {
     input: GetRepositoryInput
     output: GetRepositoryResponse
@@ -734,6 +759,7 @@ structure DeleteRepositoryInput {
 /// Delete a snapshot repository
 @http(method: "DELETE", uri: "/_snapshot/{repository}")
 @idempotent
+@externalDocumentation("Elasticsearch Delete Repository API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-snapshot-repo-api.html")
 operation DeleteRepository {
     input: DeleteRepositoryInput
     output: DeleteRepositoryResponse
@@ -766,6 +792,7 @@ structure CreateSnapshotInput {
 /// Create a snapshot
 @http(method: "PUT", uri: "/_snapshot/{repository}/{snapshot}")
 @idempotent
+@externalDocumentation("Elasticsearch Create Snapshot API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/create-snapshot-api.html")
 operation CreateSnapshot {
     input: CreateSnapshotInput
     output: CreateSnapshotResponse
@@ -791,6 +818,7 @@ structure GetSnapshotInput {
 /// Get snapshot information
 @http(method: "GET", uri: "/_snapshot/{repository}/{snapshot}")
 @readonly
+@externalDocumentation("Elasticsearch Get Snapshot API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/get-snapshot-api.html")
 operation GetSnapshot {
     input: GetSnapshotInput
     output: GetSnapshotResponse
@@ -813,6 +841,7 @@ structure DeleteSnapshotInput {
 /// Delete a snapshot
 @http(method: "DELETE", uri: "/_snapshot/{repository}/{snapshot}")
 @idempotent
+@externalDocumentation("Elasticsearch Delete Snapshot API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-snapshot-api.html")
 operation DeleteSnapshot {
     input: DeleteSnapshotInput
     output: DeleteSnapshotResponse
@@ -844,6 +873,7 @@ structure RestoreSnapshotInput {
 
 /// Restore a snapshot
 @http(method: "POST", uri: "/_snapshot/{repository}/{snapshot}/_restore")
+@externalDocumentation("Elasticsearch Restore Snapshot API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/restore-snapshot-api.html")
 operation RestoreSnapshot {
     input: RestoreSnapshotInput
     output: RestoreSnapshotResponse
@@ -877,6 +907,7 @@ structure ReindexInput {
 
 /// Reindex documents from one index to another
 @http(method: "POST", uri: "/_reindex")
+@externalDocumentation("Elasticsearch Reindex API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html")
 operation Reindex {
     input: ReindexInput
     output: ReindexResponse
@@ -906,6 +937,7 @@ structure PutPipelineInput {
 /// Create or update an ingest pipeline
 @http(method: "PUT", uri: "/_ingest/pipeline/{id}")
 @idempotent
+@externalDocumentation("Elasticsearch Put Pipeline API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/put-pipeline-api.html")
 operation PutPipeline {
     input: PutPipelineInput
     output: PutPipelineResponse
@@ -928,6 +960,7 @@ structure GetPipelineInput {
 /// Get ingest pipeline
 @http(method: "GET", uri: "/_ingest/pipeline/{id}")
 @readonly
+@externalDocumentation("Elasticsearch Get Pipeline API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/get-pipeline-api.html")
 operation GetPipeline {
     input: GetPipelineInput
     output: GetPipelineResponse
@@ -949,6 +982,7 @@ structure DeletePipelineInput {
 /// Delete an ingest pipeline
 @http(method: "DELETE", uri: "/_ingest/pipeline/{id}")
 @idempotent
+@externalDocumentation("Elasticsearch Delete Pipeline API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-pipeline-api.html")
 operation DeletePipeline {
     input: DeletePipelineInput
     output: DeletePipelineResponse
@@ -970,6 +1004,7 @@ structure SimulatePipelineInput {
 
 /// Simulate an ingest pipeline
 @http(method: "POST", uri: "/_ingest/pipeline/{id}/_simulate")
+@externalDocumentation("Elasticsearch Simulate Pipeline API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/simulate-pipeline-api.html")
 operation SimulatePipeline {
     input: SimulatePipelineInput
     output: SimulatePipelineResponse
@@ -1002,6 +1037,7 @@ structure PutStoredScriptInput {
 /// Create or update a stored script
 @http(method: "PUT", uri: "/_scripts/{id}")
 @idempotent
+@externalDocumentation("Elasticsearch Put Stored Script API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/create-stored-script-api.html")
 operation PutStoredScript {
     input: PutStoredScriptInput
     output: PutStoredScriptResponse
@@ -1024,6 +1060,7 @@ structure GetStoredScriptInput {
 /// Get a stored script
 @http(method: "GET", uri: "/_scripts/{id}")
 @readonly
+@externalDocumentation("Elasticsearch Get Stored Script API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/get-stored-script-api.html")
 operation GetStoredScript {
     input: GetStoredScriptInput
     output: GetStoredScriptResponse
@@ -1045,6 +1082,7 @@ structure DeleteStoredScriptInput {
 /// Delete a stored script
 @http(method: "DELETE", uri: "/_scripts/{id}")
 @idempotent
+@externalDocumentation("Elasticsearch Delete Stored Script API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-stored-script-api.html")
 operation DeleteStoredScript {
     input: DeleteStoredScriptInput
     output: DeleteStoredScriptResponse
@@ -1081,6 +1119,7 @@ structure ListTasksInput {
 /// List running tasks
 @http(method: "GET", uri: "/_tasks")
 @readonly
+@externalDocumentation("Elasticsearch Task Management API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html")
 operation ListTasks {
     input: ListTasksInput
     output: ListTasksResponse
@@ -1102,6 +1141,7 @@ structure GetTaskInput {
 /// Get task information
 @http(method: "GET", uri: "/_tasks/{taskId}")
 @readonly
+@externalDocumentation("Elasticsearch Get Task API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html")
 operation GetTask {
     input: GetTaskInput
     output: GetTaskResponse
@@ -1125,6 +1165,7 @@ structure CancelTaskInput {
 
 /// Cancel a running task
 @http(method: "POST", uri: "/_tasks/{taskId}/_cancel")
+@externalDocumentation("Elasticsearch Cancel Task API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html#task-cancellation")
 operation CancelTask {
     input: CancelTaskInput
     output: CancelTaskResponse
