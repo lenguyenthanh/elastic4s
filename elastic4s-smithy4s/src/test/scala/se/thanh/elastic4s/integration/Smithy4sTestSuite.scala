@@ -2,7 +2,6 @@ package se.thanh.elastic4s.integration
 
 import se.thanh.elastic4cats._
 import cats.effect.{IO, Resource}
-import com.dimafeng.testcontainers.ElasticsearchContainer
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.client.Client
 import smithy4s.http4s.SimpleRestJsonBuilder
@@ -27,11 +26,6 @@ trait Smithy4sTestSuite extends IOSuite {
       }
     }
   }
-
-  /** Helper to get the Elasticsearch URL from the container
-    */
-  def elasticsearchUrl(container: ElasticsearchContainer): String =
-    s"http://${container.httpHostAddress}"
 
   private def createElasticServiceClient(httpClient: Client[IO], baseUri: Uri): IO[ElasticService[IO]] = {
 
