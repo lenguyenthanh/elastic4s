@@ -1,6 +1,7 @@
 package se.thanh.elastic4s.integration
 
 import smithy4s.Document
+import se.thanh.elastic4cats._
 
 /** Integration tests for the generated ElasticService using smithy4s http4s client */
 object ElasticServiceIntegrationTest extends Smithy4sTestSuite {
@@ -282,7 +283,7 @@ object ElasticServiceIntegrationTest extends Smithy4sTestSuite {
       // Create an index
       _ <- elasticService.createIndex(
              index = "test-close-open-index",
-             body = Some(Document.obj())
+             body = Some(CreateIndexBody())
            )
 
       // Close the index
@@ -307,7 +308,7 @@ object ElasticServiceIntegrationTest extends Smithy4sTestSuite {
       // Create an index with some data
       _ <- elasticService.createIndex(
              index = "test-stats-index",
-             body = Some(Document.obj())
+             body = Some(CreateIndexBody())
            )
 
       _ <- elasticService.indexDocument(
@@ -333,7 +334,7 @@ object ElasticServiceIntegrationTest extends Smithy4sTestSuite {
       // Create an index
       _ <- elasticService.createIndex(
              index = "test-alias-index",
-             body = Some(Document.obj())
+             body = Some(CreateIndexBody())
            )
 
       // Add an alias

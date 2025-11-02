@@ -16,7 +16,6 @@ structure CreateIndexRequest {
 }
 
 /// Body for creating an index
-@bincompatFriendly
 structure CreateIndexBody {
     settings: IndexSettings
     mappings: Mappings
@@ -25,7 +24,9 @@ structure CreateIndexBody {
 
 /// Index settings
 structure IndexSettings {
+    @jsonName("number_of_shards")
     numberOfShards: Integer
+    @jsonName("number_of_replicas")
     numberOfReplicas: Integer
 
     @jsonName("refresh_interval")
