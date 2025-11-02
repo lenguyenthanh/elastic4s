@@ -2,9 +2,12 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use alloy#simpleRestJson
+
 /// Unified Elasticsearch Service
 /// Provides all Elasticsearch operations in a single service
 @title("Elasticsearch API")
+@simpleRestJson
 service ElasticService {
     version: "9.0"
     operations: [
@@ -182,7 +185,7 @@ structure IndexDocumentInput {
     timeout: String
 
     @httpQuery("refresh")
-    refresh: String
+    refresh: String // can be "true", "false", or "wait_for"
 
     @httpQuery("wait_for_active_shards")
     waitForActiveShards: String
