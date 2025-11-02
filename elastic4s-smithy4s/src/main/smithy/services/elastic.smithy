@@ -182,9 +182,13 @@ structure IndexDocumentInput {
     pipeline: String
 }
 
-/// Index a document
+/// Create or update a document in an index
+/// Add a JSON document to the specified data stream or index and make it searchable.
+/// If the target is an index and the document already exists, the request updates the document and increments its version.
+///
+/// Check https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-index
 @http(method: "POST", uri: "/{index}/_doc/{id}")
-@externalDocumentation("Elasticsearch Index API": "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html")
+@externalDocumentation("Elasticsearch Index API": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-index")
 operation IndexDocument {
     input: IndexDocumentInput
     output: IndexResponse
