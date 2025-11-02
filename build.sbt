@@ -149,13 +149,13 @@ lazy val smithy4s = (project in file("elastic4s-smithy4s"))
   .settings(scala3Settings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.disneystreaming.smithy4s" %% "smithy4s-core" % "0.18.28",
-      "com.disneystreaming.smithy4s" %% "smithy4s-json" % "0.18.28",
+      "com.disneystreaming.smithy4s" %% "smithy4s-core" % "0.18.43",
+      "com.disneystreaming.smithy4s" %% "smithy4s-json" % "0.18.43",
       "com.disneystreaming" %% "weaver-cats" % "0.8.4" % Test,
       "com.dimafeng" %% "testcontainers-scala-core" % "0.41.0" % Test,
       "org.http4s" %% "http4s-client" % Http4sVersion % Test,
       "org.http4s" %% "http4s-ember-client" % Http4sVersion % Test,
-      "com.disneystreaming.smithy4s" %% "smithy4s-http4s" % "0.18.28" % Test
+      "com.disneystreaming.smithy4s" %% "smithy4s-http4s" % "0.18.43" % Test
     ),
     testFrameworks += new TestFramework("weaver.framework.CatsEffect")
   )
