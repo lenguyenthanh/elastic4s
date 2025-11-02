@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request to create or update a stored script
-@bincompatFriendly
 structure PutStoredScriptRequest {
     @required
     id: String
@@ -19,7 +16,6 @@ structure PutStoredScriptRequest {
 }
 
 /// Stored script
-@bincompatFriendly
 structure StoredScript {
     @required
     source: String
@@ -29,7 +25,6 @@ structure StoredScript {
 }
 
 /// Request to get a stored script
-@bincompatFriendly
 structure GetStoredScriptRequest {
     @required
     id: String
@@ -38,7 +33,6 @@ structure GetStoredScriptRequest {
 }
 
 /// Response for get stored script
-@bincompatFriendly
 structure GetStoredScriptResponse {
     @jsonName("_id")
     id: String
@@ -48,7 +42,6 @@ structure GetStoredScriptResponse {
 }
 
 /// Request to delete a stored script
-@bincompatFriendly
 structure DeleteStoredScriptRequest {
     @required
     id: String
@@ -58,14 +51,12 @@ structure DeleteStoredScriptRequest {
 }
 
 /// Response for delete stored script
-@bincompatFriendly
 structure DeleteStoredScriptResponse {
     @required
     acknowledged: Boolean
 }
 
 /// Search template request
-@bincompatFriendly
 structure SearchTemplateRequest {
     @required
     indexes: StringList
@@ -79,7 +70,6 @@ structure SearchTemplateRequest {
 }
 
 /// Put search template request
-@bincompatFriendly
 structure PutSearchTemplateRequest {
     @required
     id: String
@@ -89,7 +79,6 @@ structure PutSearchTemplateRequest {
 }
 
 /// Template script
-@bincompatFriendly
 structure TemplateScript {
     @required
     source: String
@@ -98,14 +87,12 @@ structure TemplateScript {
 }
 
 /// Get search template request
-@bincompatFriendly
 structure GetSearchTemplateRequest {
     @required
     id: String
 }
 
 /// Delete search template request
-@bincompatFriendly
 structure DeleteSearchTemplateRequest {
     @required
     id: String

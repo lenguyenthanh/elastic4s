@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request for indexing a document
-@bincompatFriendly
 structure IndexRequest {
     @required
     index: String
@@ -26,7 +23,6 @@ structure IndexRequest {
 }
 
 /// Response for index request
-@bincompatFriendly
 structure IndexResponse {
     @jsonName("_index")
     @required

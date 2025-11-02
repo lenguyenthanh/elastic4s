@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request to create a snapshot repository
-@bincompatFriendly
 structure CreateRepositoryRequest {
     @required
     repositoryName: String
@@ -20,7 +17,6 @@ structure CreateRepositoryRequest {
 }
 
 /// Repository settings
-@bincompatFriendly
 structure RepositorySettings {
     location: String
     compress: Boolean
@@ -31,7 +27,6 @@ structure RepositorySettings {
 }
 
 /// Request to get repository
-@bincompatFriendly
 structure GetRepositoryRequest {
     @required
     repositoryName: String
@@ -41,7 +36,6 @@ structure GetRepositoryRequest {
 }
 
 /// Request to delete repository
-@bincompatFriendly
 structure DeleteRepositoryRequest {
     @required
     repositoryName: String
@@ -51,7 +45,6 @@ structure DeleteRepositoryRequest {
 }
 
 /// Request to create a snapshot
-@bincompatFriendly
 structure CreateSnapshotRequest {
     @required
     snapshotName: String
@@ -67,7 +60,6 @@ structure CreateSnapshotRequest {
 }
 
 /// Request to get snapshots
-@bincompatFriendly
 structure GetSnapshotsRequest {
     @required
     snapshotNames: StringList
@@ -80,13 +72,11 @@ structure GetSnapshotsRequest {
 }
 
 /// Response for get snapshots
-@bincompatFriendly
 structure GetSnapshotsResponse {
     snapshots: SnapshotList
 }
 
 /// Snapshot information
-@bincompatFriendly
 structure SnapshotInfo {
     snapshot: String
     uuid: String
@@ -104,7 +94,6 @@ structure SnapshotInfo {
 }
 
 /// Snapshot shard statistics
-@bincompatFriendly
 structure SnapshotShardStats {
     total: Integer
     successful: Integer
@@ -112,7 +101,6 @@ structure SnapshotShardStats {
 }
 
 /// Snapshot failure
-@bincompatFriendly
 structure SnapshotFailure {
     index: String
     shardId: Integer
@@ -121,7 +109,6 @@ structure SnapshotFailure {
 }
 
 /// Request to delete a snapshot
-@bincompatFriendly
 structure DeleteSnapshotRequest {
     @required
     snapshotName: String
@@ -134,7 +121,6 @@ structure DeleteSnapshotRequest {
 }
 
 /// Request to restore a snapshot
-@bincompatFriendly
 structure RestoreSnapshotRequest {
     @required
     snapshotName: String
@@ -155,7 +141,6 @@ structure RestoreSnapshotRequest {
 }
 
 /// Index settings for restore
-@bincompatFriendly
 structure SnapshotIndexSettings {
     numberOfShards: Integer
     numberOfReplicas: Integer
@@ -170,13 +155,11 @@ list SnapshotFailureList {
 }
 
 /// Response for get repository
-@bincompatFriendly
 structure GetRepositoryResponse {
     repositories: RepositoryMap
 }
 
 /// Repository information
-@bincompatFriendly
 structure RepositoryInfo {
     type: String
     settings: RepositorySettings
@@ -188,25 +171,21 @@ map RepositoryMap {
 }
 
 /// Response for create snapshot
-@bincompatFriendly
 structure CreateSnapshotResponse {
     snapshot: SnapshotInfo
 }
 
 /// Response for get snapshot  
-@bincompatFriendly
 structure GetSnapshotResponse {
     snapshots: SnapshotList
 }
 
 /// Response for restore snapshot
-@bincompatFriendly
 structure RestoreSnapshotResponse {
     snapshot: RestoreSnapshotInfo
 }
 
 /// Restore snapshot information
-@bincompatFriendly
 structure RestoreSnapshotInfo {
     snapshot: String
     indices: StringList

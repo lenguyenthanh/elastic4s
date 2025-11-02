@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request to list tasks
-@bincompatFriendly
 structure ListTasksRequest {
     actions: StringList
     nodes: StringList
@@ -16,13 +13,11 @@ structure ListTasksRequest {
 }
 
 /// Response for list tasks
-@bincompatFriendly
 structure ListTasksResponse {
     nodes: TaskNodeMap
 }
 
 /// Task node information
-@bincompatFriendly
 structure TaskNode {
     name: String
 
@@ -36,7 +31,6 @@ structure TaskNode {
 }
 
 /// Task information
-@bincompatFriendly
 structure TaskInfo {
     node: String
     id: Long
@@ -55,7 +49,6 @@ structure TaskInfo {
 }
 
 /// Request to get a task
-@bincompatFriendly
 structure GetTaskRequest {
     @required
     taskId: String
@@ -65,7 +58,6 @@ structure GetTaskRequest {
 }
 
 /// Response for get task
-@bincompatFriendly
 structure GetTaskResponse {
     completed: Boolean
     task: TaskInfo
@@ -74,7 +66,6 @@ structure GetTaskResponse {
 }
 
 /// Task response
-@bincompatFriendly
 structure TaskResponse {
     took: Long
 
@@ -95,14 +86,12 @@ structure TaskResponse {
 }
 
 /// Task error
-@bincompatFriendly
 structure TaskError {
     type: String
     reason: String
 }
 
 /// Request to cancel a task
-@bincompatFriendly
 structure CancelTaskRequest {
     @required
     taskId: String
@@ -111,7 +100,6 @@ structure CancelTaskRequest {
 }
 
 /// Response for cancel task
-@bincompatFriendly
 structure CancelTaskResponse {
     nodes: TaskNodeMap
 }

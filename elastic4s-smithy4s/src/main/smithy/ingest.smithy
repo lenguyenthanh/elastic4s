@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request to create or update an ingest pipeline
-@bincompatFriendly
 structure PutPipelineRequest {
     @required
     id: String
@@ -23,7 +20,6 @@ structure PutPipelineRequest {
 }
 
 /// Ingest processor
-@bincompatFriendly
 structure Processor {
     type: String
     field: String
@@ -38,7 +34,6 @@ structure Processor {
 }
 
 /// Request to get pipeline
-@bincompatFriendly
 structure GetPipelineRequest {
     @required
     id: String
@@ -47,13 +42,11 @@ structure GetPipelineRequest {
 }
 
 /// Response for get pipeline
-@bincompatFriendly
 structure GetPipelineResponse {
     pipelines: PipelineMap
 }
 
 /// Pipeline information
-@bincompatFriendly
 structure PipelineInfo {
     description: String
     processors: ProcessorList
@@ -61,7 +54,6 @@ structure PipelineInfo {
 }
 
 /// Request to delete pipeline
-@bincompatFriendly
 structure DeletePipelineRequest {
     @required
     id: String
@@ -71,14 +63,12 @@ structure DeletePipelineRequest {
 }
 
 /// Response for delete pipeline
-@bincompatFriendly
 structure DeletePipelineResponse {
     @required
     acknowledged: Boolean
 }
 
 /// Request to simulate pipeline
-@bincompatFriendly
 structure SimulatePipelineRequest {
     @required
     id: String
@@ -90,7 +80,6 @@ structure SimulatePipelineRequest {
 }
 
 /// Simulate document
-@bincompatFriendly
 structure SimulateDoc {
     @jsonName("_index")
     index: String
@@ -103,13 +92,11 @@ structure SimulateDoc {
 }
 
 /// Response for simulate pipeline
-@bincompatFriendly
 structure SimulatePipelineResponse {
     docs: SimulateResultList
 }
 
 /// Simulate result
-@bincompatFriendly
 structure SimulateResult {
     doc: SimulateDoc
 
@@ -120,7 +107,6 @@ structure SimulateResult {
 }
 
 /// Processor result
-@bincompatFriendly
 structure ProcessorResult {
     @jsonName("processor_type")
     processorType: String
@@ -131,7 +117,6 @@ structure ProcessorResult {
 }
 
 /// Ingest error
-@bincompatFriendly
 structure IngestError {
     type: String
     reason: String

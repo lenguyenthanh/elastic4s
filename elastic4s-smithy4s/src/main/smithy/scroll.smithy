@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request to search with scroll
-@bincompatFriendly
 structure SearchScrollRequest {
     @required
     scrollId: String
@@ -14,7 +11,6 @@ structure SearchScrollRequest {
 }
 
 /// Response for search scroll
-@bincompatFriendly
 structure SearchScrollResponse {
     @jsonName("_scroll_id")
     scrollId: String
@@ -31,7 +27,6 @@ structure SearchScrollResponse {
 }
 
 /// Scroll shards information
-@bincompatFriendly
 structure ScrollShards {
     total: Integer
     successful: Integer
@@ -40,7 +35,6 @@ structure ScrollShards {
 }
 
 /// Scroll hits
-@bincompatFriendly
 structure ScrollHits {
     total: ScrollTotalHits
 
@@ -51,14 +45,12 @@ structure ScrollHits {
 }
 
 /// Total hits information
-@bincompatFriendly
 structure ScrollTotalHits {
     value: Long
     relation: String
 }
 
 /// Search hit
-@bincompatFriendly
 structure ScrollHit {
     @jsonName("_index")
     index: String
@@ -79,14 +71,12 @@ structure ScrollHit {
 }
 
 /// Request to clear scroll
-@bincompatFriendly
 structure ClearScrollRequest {
     @required
     scrollIds: StringList
 }
 
 /// Response for clear scroll
-@bincompatFriendly
 structure ClearScrollResponse {
     succeeded: Boolean
 

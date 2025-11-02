@@ -2,10 +2,7 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
-use smithy4s.meta#bincompatFriendly
-
 /// Request to create an index
-@bincompatFriendly
 structure CreateIndexRequest {
     @required
     name: String
@@ -27,7 +24,6 @@ structure CreateIndexBody {
 }
 
 /// Index settings
-@bincompatFriendly
 structure IndexSettings {
     numberOfShards: Integer
     numberOfReplicas: Integer
@@ -46,7 +42,6 @@ structure IndexSettings {
 }
 
 /// Analysis settings
-@bincompatFriendly
 structure AnalysisSettings {
     analyzer: AnalyzerMap
     tokenizer: TokenizerMap
@@ -55,7 +50,6 @@ structure AnalysisSettings {
 }
 
 /// Mappings for an index
-@bincompatFriendly
 structure Mappings {
     properties: PropertyMap
 
@@ -72,7 +66,6 @@ structure Mappings {
 }
 
 /// Source settings
-@bincompatFriendly
 structure SourceSettings {
     enabled: Boolean
     includes: StringList
@@ -80,7 +73,6 @@ structure SourceSettings {
 }
 
 /// Routing settings
-@bincompatFriendly
 structure RoutingSettings {
     required: Boolean
 }
@@ -94,7 +86,6 @@ enum Dynamic {
 }
 
 /// Property mapping
-@bincompatFriendly
 structure Property {
     @required
     type: String
@@ -140,14 +131,12 @@ structure Property {
 }
 
 /// Index prefixes settings
-@bincompatFriendly
 structure IndexPrefixes {
     minChars: Integer
     maxChars: Integer
 }
 
 /// Request to delete an index
-@bincompatFriendly
 structure DeleteIndexRequest {
     @required
     indexes: StringList
@@ -159,14 +148,12 @@ structure DeleteIndexRequest {
 }
 
 /// Response for delete index
-@bincompatFriendly
 structure DeleteIndexResponse {
     @required
     acknowledged: Boolean
 }
 
 /// Request to get index
-@bincompatFriendly
 structure GetIndexRequest {
     @required
     indexes: StringList
@@ -182,7 +169,6 @@ structure GetIndexRequest {
 }
 
 /// Request to check if index exists
-@bincompatFriendly
 structure IndexExistsRequest {
     @required
     indexes: StringList
@@ -196,7 +182,6 @@ structure IndexExistsRequest {
 }
 
 /// Request to open an index
-@bincompatFriendly
 structure OpenIndexRequest {
     @required
     indexes: StringList
@@ -210,7 +195,6 @@ structure OpenIndexRequest {
 }
 
 /// Response for open index
-@bincompatFriendly
 structure OpenIndexResponse {
     @required
     acknowledged: Boolean
@@ -220,7 +204,6 @@ structure OpenIndexResponse {
 }
 
 /// Request to close an index
-@bincompatFriendly
 structure CloseIndexRequest {
     @required
     indexes: StringList
@@ -234,7 +217,6 @@ structure CloseIndexRequest {
 }
 
 /// Response for close index
-@bincompatFriendly
 structure CloseIndexResponse {
     @required
     acknowledged: Boolean
@@ -246,20 +228,17 @@ structure CloseIndexResponse {
 }
 
 /// Index result
-@bincompatFriendly
 structure IndexResult {
     closed: Boolean
     shards: ShardResultMap
 }
 
 /// Shard result
-@bincompatFriendly
 structure ShardResult {
     failures: FailureList
 }
 
 /// Failure information
-@bincompatFriendly
 structure Failure {
     index: String
     shard: Integer
@@ -267,7 +246,6 @@ structure Failure {
 }
 
 /// Request to refresh an index
-@bincompatFriendly
 structure RefreshIndexRequest {
     @required
     indexes: StringList
@@ -278,7 +256,6 @@ structure RefreshIndexRequest {
 }
 
 /// Request to flush an index
-@bincompatFriendly
 structure FlushIndexRequest {
     @required
     indexes: StringList
@@ -291,7 +268,6 @@ structure FlushIndexRequest {
 }
 
 /// Request to get index stats
-@bincompatFriendly
 structure IndexStatsRequest {
     indexes: StringList
 
@@ -306,7 +282,6 @@ structure IndexStatsRequest {
 }
 
 /// Response for index stats
-@bincompatFriendly
 structure IndexStatsResponse {
     @jsonName("_shards")
     shards: ShardsInfo
@@ -318,7 +293,6 @@ structure IndexStatsResponse {
 }
 
 /// Shards info
-@bincompatFriendly
 structure ShardsInfo {
     total: Integer
     successful: Integer
@@ -326,14 +300,12 @@ structure ShardsInfo {
 }
 
 /// Index statistics
-@bincompatFriendly
 structure IndexStats {
     primaries: Stats
     total: Stats
 }
 
 /// Statistics
-@bincompatFriendly
 structure Stats {
     docs: DocsStats
     store: StoreStats
@@ -353,14 +325,12 @@ structure Stats {
 }
 
 /// Document statistics
-@bincompatFriendly
 structure DocsStats {
     count: Long
     deleted: Long
 }
 
 /// Store statistics
-@bincompatFriendly
 structure StoreStats {
     @jsonName("size_in_bytes")
     sizeInBytes: Long
@@ -370,7 +340,6 @@ structure StoreStats {
 }
 
 /// Indexing statistics
-@bincompatFriendly
 structure IndexingStats {
     @jsonName("index_total")
     indexTotal: Long
@@ -392,7 +361,6 @@ structure IndexingStats {
 }
 
 /// Get statistics
-@bincompatFriendly
 structure GetStats {
     total: Long
 
@@ -415,7 +383,6 @@ structure GetStats {
 }
 
 /// Search statistics
-@bincompatFriendly
 structure SearchStats {
     @jsonName("query_total")
     queryTotal: Long
@@ -455,7 +422,6 @@ structure SearchStats {
 }
 
 /// Merge statistics
-@bincompatFriendly
 structure MergeStats {
     current: Long
 
@@ -478,7 +444,6 @@ structure MergeStats {
 }
 
 /// Refresh statistics
-@bincompatFriendly
 structure RefreshStats {
     total: Long
 
@@ -493,7 +458,6 @@ structure RefreshStats {
 }
 
 /// Flush statistics
-@bincompatFriendly
 structure FlushStats {
     total: Long
 
@@ -504,7 +468,6 @@ structure FlushStats {
 }
 
 /// Warmer statistics
-@bincompatFriendly
 structure WarmerStats {
     current: Long
     total: Long
@@ -514,7 +477,6 @@ structure WarmerStats {
 }
 
 /// Query cache statistics
-@bincompatFriendly
 structure QueryCacheStats {
     @jsonName("memory_size_in_bytes")
     memorySizeInBytes: Long
@@ -538,7 +500,6 @@ structure QueryCacheStats {
 }
 
 /// Fielddata statistics
-@bincompatFriendly
 structure FielddataStats {
     @jsonName("memory_size_in_bytes")
     memorySizeInBytes: Long
@@ -549,7 +510,6 @@ structure FielddataStats {
 }
 
 /// Completion statistics
-@bincompatFriendly
 structure CompletionStats {
     @jsonName("size_in_bytes")
     sizeInBytes: Long
@@ -558,7 +518,6 @@ structure CompletionStats {
 }
 
 /// Segment statistics
-@bincompatFriendly
 structure SegmentStats {
     count: Long
 
@@ -594,7 +553,6 @@ structure SegmentStats {
 }
 
 /// Translog statistics
-@bincompatFriendly
 structure TranslogStats {
     operations: Long
 
@@ -612,7 +570,6 @@ structure TranslogStats {
 }
 
 /// Request cache statistics
-@bincompatFriendly
 structure RequestCacheStats {
     @jsonName("memory_size_in_bytes")
     memorySizeInBytes: Long
@@ -627,7 +584,6 @@ structure RequestCacheStats {
 }
 
 /// Field statistics
-@bincompatFriendly
 structure FieldStats {
     @jsonName("memory_size_in_bytes")
     memorySizeInBytes: Long
@@ -698,7 +654,6 @@ map FieldStatsMap {
 }
 
 /// Alias definition
-@bincompatFriendly
 structure Alias {
     filter: Document
     routing: String
