@@ -141,6 +141,7 @@ structure DeleteIndexRequest {
 
 /// Response for delete index
 structure DeleteIndexResponse {
+    @required
     acknowledged: Boolean
 }
 
@@ -187,6 +188,7 @@ structure OpenIndexRequest {
 
 /// Response for open index
 structure OpenIndexResponse {
+    @required
     acknowledged: Boolean
 
     @jsonName("shards_acknowledged")
@@ -208,6 +210,7 @@ structure CloseIndexRequest {
 
 /// Response for close index
 structure CloseIndexResponse {
+    @required
     acknowledged: Boolean
 
     @jsonName("shards_acknowledged")

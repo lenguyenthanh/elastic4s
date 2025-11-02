@@ -132,3 +132,8 @@ structure Retries {
 list SortValueList {
     member: Document
 }
+
+map SourceMap {
+    key: String
+    value: Document
+}

@@ -95,6 +95,7 @@ structure RemoveIndexAction {
 
 /// Response for indices aliases request
 structure IndicesAliasesResponse {
+    @required
     acknowledged: Boolean
 }
 

@@ -64,6 +64,7 @@ structure DeletePipelineRequest {
 
 /// Response for delete pipeline
 structure DeletePipelineResponse {
+    @required
     acknowledged: Boolean
 }
 

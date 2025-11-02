@@ -14,7 +14,8 @@ service ElasticService {
         // Document Operations
         GetDocument
         MultiGetDocuments
-        CountDocuments
+        GetCountDocuments
+        PostCountDocuments
         IndexDocument
 
         // Search Operations
@@ -105,16 +106,22 @@ structure GetDocumentInput {
     realtime: Boolean
 }
 
+@error("client")
+@httpError(404)
+structure GetDocumentError with [GetResponseMixin] {}
+
 /// Retrieves the specified JSON document from an index
 /// Returns a document that is stored in an index by its id.
 ///
 /// Check https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get
-@http(method: "GET", uri: "/{index}/_doc/{id}")
+// @http(method: "GET", uri: "/{index}/_doc/{id}", code: 404) cause danger warning
+@http(method: "GET", uri: "/{index}/_doc/{id}", code: 200)
 @readonly
 @externalDocumentation("Elasticsearch Get API": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get")
 operation GetDocument {
     input: GetDocumentInput
     output: GetResponse
+    // errors: [GetDocumentError]
 }
 
 /// HTTP-bound MultiGet Request
@@ -146,10 +153,17 @@ operation MultiGetDocuments {
 
 /// HTTP-bound Count Request
 structure CountDocumentsInput {
-    @httpQuery("index")
-    indexes: String
+    /// A comma-separated list of data streams, indices, and aliases to search.
+    /// It supports wildcards (*). To search all data streams and indices,
+    /// omit this parameter or use * or _all.
+    @required
+    @httpLabel
+    index: String
 
+    /// Defines the search query using Query DSL.
+    /// A request body query cannot be used with the q query string parameter.
     @httpPayload
+    @required
     body: Document
 }
 
@@ -157,10 +171,25 @@ structure CountDocumentsInput {
 /// Gets the number of documents matching a query.
 ///
 /// Check https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-count
-@http(method: "POST", uri: "/_count")
+@http(method: "POST", uri: "/{index}/_count")
 @externalDocumentation("Elasticsearch Count API": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-count")
-operation CountDocuments {
+operation PostCountDocuments {
     input: CountDocumentsInput
+    output: CountResponse
+}
+
+/// Returns number of matches for a search query
+/// Gets the number of documents matching a query.
+///
+/// Check https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-count
+@http(method: "GET", uri: "/{index}/_count")
+@externalDocumentation("Elasticsearch Count API": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-count")
+operation GetCountDocuments {
+    input := {
+        @required
+        @httpLabel
+        index: String
+    }
     output: CountResponse
 }
 
@@ -308,6 +337,7 @@ structure CreateIndexInput {
 }
 
 structure CreateIndexResponse {
+    @required
     acknowledged: Boolean
     @jsonName("shards_acknowledged")
     shardsAcknowledged: Boolean
@@ -408,6 +438,11 @@ structure RefreshIndexInput {
     index: String
 }
 
+structure RefreshIndexResponse {
+  @jsonName("_shards")
+  shards: Shards
+}
+
 /// Performs the refresh operation in one or more indices
 /// Makes recent operations performed on one or more indices available for search.
 ///
@@ -416,6 +451,7 @@ structure RefreshIndexInput {
 @externalDocumentation("Elasticsearch Refresh API": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-refresh")
 operation RefreshIndex {
     input: RefreshIndexInput
+    output: RefreshIndexResponse
 }
 
 /// HTTP-bound Flush Index Request
@@ -516,6 +552,7 @@ operation UpdateAliases {
 }
 
 structure UpdateAliasesResponse {
+    @required
     acknowledged: Boolean
 }
 
@@ -782,6 +819,7 @@ structure CreateRepositoryInput {
 }
 
 structure CreateRepositoryResponse {
+    @required
     acknowledged: Boolean
 }
 
@@ -848,6 +886,7 @@ operation DeleteRepository {
 }
 
 structure DeleteRepositoryResponse {
+    @required
     acknowledged: Boolean
 }
 
@@ -939,6 +978,7 @@ operation DeleteSnapshot {
 }
 
 structure DeleteSnapshotResponse {
+    @required
     acknowledged: Boolean
 }
 
@@ -1044,6 +1084,7 @@ operation PutPipeline {
 }
 
 structure PutPipelineResponse {
+    @required
     acknowledged: Boolean
 }
 
@@ -1156,6 +1197,7 @@ operation PutStoredScript {
 }
 
 structure PutStoredScriptResponse {
+    @required
     acknowledged: Boolean
 }
 

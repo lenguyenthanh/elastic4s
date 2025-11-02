@@ -22,7 +22,8 @@ structure GetRequest {
 }
 
 /// Response for get document request
-structure GetResponse {
+@mixin
+structure GetResponseMixin {
     @jsonName("_id")
     @required
     id: String
@@ -48,6 +49,9 @@ structure GetResponse {
 
     fields: FieldMap
     source: SourceMap
+}
+
+structure GetResponse with [GetResponseMixin] {
 }
 
 /// Multi-get request
@@ -88,11 +92,6 @@ list GetResponseList {
 }
 
 map FieldMap {
-    key: String
-    value: Document
-}
-
-map SourceMap {
     key: String
     value: Document
 }

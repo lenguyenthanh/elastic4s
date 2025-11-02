@@ -135,8 +135,3 @@ structure UpdateByQueryResponse {
 
     failures: IndexFailureList
 }
-
-map SourceMap {
-    key: String
-    value: Document
-}

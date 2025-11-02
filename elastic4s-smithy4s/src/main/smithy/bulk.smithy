@@ -87,9 +87,14 @@ structure BulkDeleteOperation {
 
 /// Response for bulk request
 structure BulkResponse {
+    @required
     took: Long
+    @required
     errors: Boolean
+    @required
     items: BulkItemResponseList
+    @jsonName("ingest_took")
+    ingestTook: Long
 }
 
 /// Response for a single bulk item

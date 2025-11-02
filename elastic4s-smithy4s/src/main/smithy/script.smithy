@@ -52,6 +52,7 @@ structure DeleteStoredScriptRequest {
 
 /// Response for delete stored script
 structure DeleteStoredScriptResponse {
+    @required
     acknowledged: Boolean
 }
 

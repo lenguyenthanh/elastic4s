@@ -195,6 +195,7 @@ structure SearchResponse {
     @jsonName("_shards")
     shards: SearchShards
 
+    @required
     hits: SearchHits
 
     aggregations: AggregationResultMap
@@ -232,6 +233,7 @@ structure FailureReason {
 
 /// Search hits
 structure SearchHits {
+    /// Total hit count information, present only if track_total_hits wasn't false in the search request.
     total: TotalHits
 
     @jsonName("max_score")
@@ -242,7 +244,9 @@ structure SearchHits {
 
 /// Total hits info
 structure TotalHits {
+    @required
     value: Long
+    @required
     relation: String
 }
 
