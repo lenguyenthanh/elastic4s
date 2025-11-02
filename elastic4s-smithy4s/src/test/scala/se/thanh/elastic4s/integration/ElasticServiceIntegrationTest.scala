@@ -234,10 +234,10 @@ object ElasticServiceIntegrationTest extends Smithy4sTestSuite {
       createResponse <- elasticService.createIndex(
                           index = "test-create-delete-index",
                           body = Some(
-                            Document.obj(
-                              "settings" -> Document.obj(
-                                "number_of_shards" -> Document.fromInt(1)
-                              )
+                            CreateIndexBody(
+                              settings = Some(IndexSettings(numberOfShards = Some(1))),
+                              mappings = None,
+                              aliases = None
                             )
                           )
                         )

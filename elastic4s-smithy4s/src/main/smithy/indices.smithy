@@ -18,6 +18,14 @@ structure CreateIndexRequest {
     masterTimeout: String
 }
 
+/// Body for creating an index
+@bincompatFriendly
+structure CreateIndexBody {
+    settings: IndexSettings
+    mappings: Mappings
+    aliases: AliasMap
+}
+
 /// Index settings
 @bincompatFriendly
 structure IndexSettings {

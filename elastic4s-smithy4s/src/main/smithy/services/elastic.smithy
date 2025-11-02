@@ -324,7 +324,7 @@ structure CreateIndexInput {
     index: String
 
     @httpPayload
-    body: Document
+    body: CreateIndexBody
 
     @httpQuery("timeout")
     timeout: String
