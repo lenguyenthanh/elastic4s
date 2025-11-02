@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Bulk request containing multiple operations
+@bincompatFriendly
 structure BulkRequest {
     @required
     operations: BulkOperationList
@@ -24,6 +27,7 @@ union BulkOperation {
 }
 
 /// Index operation in bulk request
+@bincompatFriendly
 structure BulkIndexOperation {
     @required
     index: String
@@ -40,6 +44,7 @@ structure BulkIndexOperation {
 }
 
 /// Create operation in bulk request
+@bincompatFriendly
 structure BulkCreateOperation {
     @required
     index: String
@@ -56,6 +61,7 @@ structure BulkCreateOperation {
 }
 
 /// Update operation in bulk request
+@bincompatFriendly
 structure BulkUpdateOperation {
     @required
     index: String
@@ -73,6 +79,7 @@ structure BulkUpdateOperation {
 }
 
 /// Delete operation in bulk request
+@bincompatFriendly
 structure BulkDeleteOperation {
     @required
     index: String
@@ -86,6 +93,7 @@ structure BulkDeleteOperation {
 }
 
 /// Response for bulk request
+@bincompatFriendly
 structure BulkResponse {
     @required
     took: Long
@@ -98,6 +106,7 @@ structure BulkResponse {
 }
 
 /// Response for a single bulk item
+@bincompatFriendly
 structure BulkItemResponse {
     index: BulkItemResult
     create: BulkItemResult
@@ -106,6 +115,7 @@ structure BulkItemResponse {
 }
 
 /// Result of a bulk item operation
+@bincompatFriendly
 structure BulkItemResult {
     @jsonName("_index")
     index: String
@@ -135,6 +145,7 @@ structure BulkItemResult {
 }
 
 /// Error information for failed bulk items
+@bincompatFriendly
 structure BulkError {
     type: String
     reason: String

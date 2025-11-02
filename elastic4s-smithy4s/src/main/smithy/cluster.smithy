@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Request to get cluster health
+@bincompatFriendly
 structure ClusterHealthRequest {
     indices: StringList
     level: String
@@ -18,6 +21,7 @@ structure ClusterHealthRequest {
 }
 
 /// Response for cluster health
+@bincompatFriendly
 structure ClusterHealthResponse {
     @jsonName("cluster_name")
     clusterName: String
@@ -67,6 +71,7 @@ structure ClusterHealthResponse {
 }
 
 /// Cluster index health
+@bincompatFriendly
 structure ClusterIndexHealth {
     status: HealthStatus
 
@@ -93,6 +98,7 @@ structure ClusterIndexHealth {
 }
 
 /// Request to get cluster state
+@bincompatFriendly
 structure ClusterStateRequest {
     indices: StringList
     metrics: StringList
@@ -105,6 +111,7 @@ structure ClusterStateRequest {
 }
 
 /// Request to get cluster stats
+@bincompatFriendly
 structure ClusterStatsRequest {
     nodeIds: StringList
     flatSettings: Boolean
@@ -112,6 +119,7 @@ structure ClusterStatsRequest {
 }
 
 /// Response for cluster stats
+@bincompatFriendly
 structure ClusterStatsResponse {
     @jsonName("cluster_name")
     clusterName: String
@@ -126,6 +134,7 @@ structure ClusterStatsResponse {
 }
 
 /// Cluster indices statistics
+@bincompatFriendly
 structure ClusterIndicesStats {
     count: Integer
     shards: ClusterShardsStats
@@ -134,6 +143,7 @@ structure ClusterIndicesStats {
 }
 
 /// Cluster shards statistics
+@bincompatFriendly
 structure ClusterShardsStats {
     total: Integer
     primaries: Integer
@@ -142,6 +152,7 @@ structure ClusterShardsStats {
 }
 
 /// Cluster shard index statistics
+@bincompatFriendly
 structure ClusterShardIndexStats {
     shards: ClusterShardStats
     primaries: ClusterShardStats
@@ -149,6 +160,7 @@ structure ClusterShardIndexStats {
 }
 
 /// Cluster shard statistics
+@bincompatFriendly
 structure ClusterShardStats {
     min: Integer
     max: Integer
@@ -156,6 +168,7 @@ structure ClusterShardStats {
 }
 
 /// Cluster shard replication statistics
+@bincompatFriendly
 structure ClusterShardReplicationStats {
     min: Double
     max: Double
@@ -163,18 +176,21 @@ structure ClusterShardReplicationStats {
 }
 
 /// Cluster docs statistics
+@bincompatFriendly
 structure ClusterDocsStats {
     count: Long
     deleted: Long
 }
 
 /// Cluster store statistics
+@bincompatFriendly
 structure ClusterStoreStats {
     @jsonName("size_in_bytes")
     sizeInBytes: Long
 }
 
 /// Cluster nodes statistics
+@bincompatFriendly
 structure ClusterNodesStats {
     count: ClusterNodeCounts
     versions: StringList
@@ -186,6 +202,7 @@ structure ClusterNodesStats {
 }
 
 /// Cluster node counts
+@bincompatFriendly
 structure ClusterNodeCounts {
     total: Integer
     data: Integer
@@ -198,6 +215,7 @@ structure ClusterNodeCounts {
 }
 
 /// Cluster OS statistics
+@bincompatFriendly
 structure ClusterOsStats {
     @jsonName("available_processors")
     availableProcessors: Integer
@@ -210,12 +228,14 @@ structure ClusterOsStats {
 }
 
 /// OS name count
+@bincompatFriendly
 structure OsNameCount {
     name: String
     count: Integer
 }
 
 /// Cluster OS memory statistics
+@bincompatFriendly
 structure ClusterOsMemStats {
     @jsonName("total_in_bytes")
     totalInBytes: Long
@@ -234,6 +254,7 @@ structure ClusterOsMemStats {
 }
 
 /// Cluster process statistics
+@bincompatFriendly
 structure ClusterProcessStats {
     cpu: ClusterProcessCpuStats
 
@@ -242,11 +263,13 @@ structure ClusterProcessStats {
 }
 
 /// Cluster process CPU statistics
+@bincompatFriendly
 structure ClusterProcessCpuStats {
     percent: Integer
 }
 
 /// Cluster process file descriptor statistics
+@bincompatFriendly
 structure ClusterProcessFileDescriptorStats {
     min: Long
     max: Long
@@ -254,6 +277,7 @@ structure ClusterProcessFileDescriptorStats {
 }
 
 /// Cluster JVM statistics
+@bincompatFriendly
 structure ClusterJvmStats {
     @jsonName("max_uptime_in_millis")
     maxUptimeInMillis: Long
@@ -264,6 +288,7 @@ structure ClusterJvmStats {
 }
 
 /// JVM version count
+@bincompatFriendly
 structure JvmVersionCount {
     version: String
 
@@ -280,6 +305,7 @@ structure JvmVersionCount {
 }
 
 /// Cluster JVM memory statistics
+@bincompatFriendly
 structure ClusterJvmMemStats {
     @jsonName("heap_used_in_bytes")
     heapUsedInBytes: Long
@@ -289,6 +315,7 @@ structure ClusterJvmMemStats {
 }
 
 /// Cluster filesystem statistics
+@bincompatFriendly
 structure ClusterFsStats {
     @jsonName("total_in_bytes")
     totalInBytes: Long
@@ -301,6 +328,7 @@ structure ClusterFsStats {
 }
 
 /// Plugin information
+@bincompatFriendly
 structure PluginInfo {
     name: String
     version: String

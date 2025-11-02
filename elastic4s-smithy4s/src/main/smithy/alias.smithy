@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Request to get aliases
+@bincompatFriendly
 structure GetAliasesRequest {
     @required
     indices: StringList
@@ -12,16 +15,19 @@ structure GetAliasesRequest {
 }
 
 /// Response for get aliases
+@bincompatFriendly
 structure GetAliasesResponse {
     aliases: AliasInfoMap
 }
 
 /// Alias information for an index
+@bincompatFriendly
 structure AliasInfo {
     aliases: AliasDetailsMap
 }
 
 /// Alias details
+@bincompatFriendly
 structure AliasDetails {
     filter: Document
 
@@ -39,6 +45,7 @@ structure AliasDetails {
 }
 
 /// Request for indices aliases operations
+@bincompatFriendly
 structure IndicesAliasesRequest {
     @required
     actions: AliasActionList
@@ -55,6 +62,7 @@ union AliasAction {
 }
 
 /// Add alias action
+@bincompatFriendly
 structure AddAliasAction {
     @required
     indices: StringList
@@ -79,6 +87,7 @@ structure AddAliasAction {
 }
 
 /// Remove alias action
+@bincompatFriendly
 structure RemoveAliasAction {
     @required
     indices: StringList
@@ -88,12 +97,14 @@ structure RemoveAliasAction {
 }
 
 /// Remove index action
+@bincompatFriendly
 structure RemoveIndexAction {
     @required
     index: String
 }
 
 /// Response for indices aliases request
+@bincompatFriendly
 structure IndicesAliasesResponse {
     @required
     acknowledged: Boolean

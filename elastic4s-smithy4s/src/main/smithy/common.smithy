@@ -2,6 +2,8 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Health status of a cluster
 enum HealthStatus {
     GREEN = "green"
@@ -57,6 +59,7 @@ enum Priority {
 }
 
 /// Document reference
+@bincompatFriendly
 structure DocumentRef {
     @required
     index: String
@@ -68,6 +71,7 @@ structure DocumentRef {
 }
 
 /// Fetch source context for controlling source retrieval
+@bincompatFriendly
 structure FetchSourceContext {
     @required
     fetchSource: Boolean
@@ -77,6 +81,7 @@ structure FetchSourceContext {
 }
 
 /// Shards information
+@bincompatFriendly
 structure Shards {
     total: Integer
     successful: Integer
@@ -89,6 +94,7 @@ list StringList {
 }
 
 /// Script for sorting or scripted fields
+@bincompatFriendly
 structure Script {
     @required
     source: String
@@ -108,6 +114,7 @@ list IndexFailureList {
 }
 
 /// Failure information
+@bincompatFriendly
 structure IndexFailure {
     index: String
     type: String
@@ -117,12 +124,14 @@ structure IndexFailure {
 }
 
 /// Failure cause
+@bincompatFriendly
 structure FailureCause {
     type: String
     reason: String
 }
 
 /// Retry information
+@bincompatFriendly
 structure Retries {
     bulk: Integer
     search: Integer

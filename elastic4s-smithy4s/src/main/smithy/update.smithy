@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Request for updating a document
+@bincompatFriendly
 structure UpdateRequest {
     @required
     index: String
@@ -28,6 +31,7 @@ structure UpdateRequest {
 }
 
 /// Response for update request
+@bincompatFriendly
 structure UpdateResponse {
     @jsonName("_index")
     @required
@@ -59,6 +63,7 @@ structure UpdateResponse {
 }
 
 /// Get result embedded in update response
+@bincompatFriendly
 structure UpdateGet {
     @jsonName("_source")
     source: SourceMap
@@ -67,6 +72,7 @@ structure UpdateGet {
 }
 
 /// Request for update by query
+@bincompatFriendly
 structure UpdateByQueryRequest {
     @required
     indexes: StringList
@@ -106,6 +112,7 @@ structure UpdateByQueryRequest {
 }
 
 /// Response for update by query
+@bincompatFriendly
 structure UpdateByQueryResponse {
     took: Long
 

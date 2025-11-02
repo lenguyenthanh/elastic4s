@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Search request
+@bincompatFriendly
 structure SearchRequest {
     @required
     indexes: StringList
@@ -61,6 +64,7 @@ structure SearchRequest {
 }
 
 /// Source filtering
+@bincompatFriendly
 structure SourceFilter {
     includes: StringList
     excludes: StringList
@@ -80,6 +84,7 @@ union Sort {
 }
 
 /// Field sort
+@bincompatFriendly
 structure FieldSort {
     @required
     field: String
@@ -92,6 +97,7 @@ structure FieldSort {
 }
 
 /// Script sort
+@bincompatFriendly
 structure ScriptSort {
     @required
     script: Script
@@ -103,6 +109,7 @@ structure ScriptSort {
 }
 
 /// Geo distance sort
+@bincompatFriendly
 structure GeoDistanceSort {
     @required
     field: String
@@ -117,6 +124,7 @@ structure GeoDistanceSort {
 }
 
 /// Geo point
+@bincompatFriendly
 structure GeoPoint {
     lat: Double
     lon: Double
@@ -138,6 +146,7 @@ enum SortMode {
 }
 
 /// Highlight settings
+@bincompatFriendly
 structure Highlight {
     fields: HighlightFieldMap
     preTags: StringList
@@ -159,6 +168,7 @@ structure Highlight {
 }
 
 /// Highlight field settings
+@bincompatFriendly
 structure HighlightField {
     preTags: StringList
     postTags: StringList
@@ -169,6 +179,7 @@ structure HighlightField {
 }
 
 /// Field collapse
+@bincompatFriendly
 structure FieldCollapse {
     @required
     field: String
@@ -178,6 +189,7 @@ structure FieldCollapse {
 }
 
 /// Inner hits for collapsed results
+@bincompatFriendly
 structure InnerHits {
     name: String
     size: Integer
@@ -186,6 +198,7 @@ structure InnerHits {
 }
 
 /// Search response
+@bincompatFriendly
 structure SearchResponse {
     took: Long
 
@@ -209,6 +222,7 @@ structure SearchResponse {
 }
 
 /// Search shards info
+@bincompatFriendly
 structure SearchShards {
     total: Integer
     successful: Integer
@@ -218,6 +232,7 @@ structure SearchShards {
 }
 
 /// Shard failure
+@bincompatFriendly
 structure ShardFailure {
     shard: Integer
     index: String
@@ -226,12 +241,14 @@ structure ShardFailure {
 }
 
 /// Failure reason
+@bincompatFriendly
 structure FailureReason {
     type: String
     reason: String
 }
 
 /// Search hits
+@bincompatFriendly
 structure SearchHits {
     /// Total hit count information, present only if track_total_hits wasn't false in the search request.
     total: TotalHits
@@ -243,6 +260,7 @@ structure SearchHits {
 }
 
 /// Total hits info
+@bincompatFriendly
 structure TotalHits {
     @required
     value: Long
@@ -251,6 +269,7 @@ structure TotalHits {
 }
 
 /// Search hit
+@bincompatFriendly
 structure Hit {
     @jsonName("_index")
     index: String
@@ -284,6 +303,7 @@ structure Hit {
 }
 
 /// Explanation for score
+@bincompatFriendly
 structure Explanation {
     value: Double
     description: String
@@ -291,11 +311,13 @@ structure Explanation {
 }
 
 /// Profile result
+@bincompatFriendly
 structure ProfileResult {
     shards: ProfileShardList
 }
 
 /// Profile shard result
+@bincompatFriendly
 structure ProfileShard {
     id: String
     searches: SearchProfileList
@@ -303,6 +325,7 @@ structure ProfileShard {
 }
 
 /// Search profile
+@bincompatFriendly
 structure SearchProfile {
     query: QueryProfileList
     rewriteTime: Long
@@ -310,6 +333,7 @@ structure SearchProfile {
 }
 
 /// Query profile
+@bincompatFriendly
 structure QueryProfile {
     type: String
     description: String
@@ -319,6 +343,7 @@ structure QueryProfile {
 }
 
 /// Collector profile
+@bincompatFriendly
 structure CollectorProfile {
     name: String
     reason: String
@@ -327,6 +352,7 @@ structure CollectorProfile {
 }
 
 /// Aggregation profile
+@bincompatFriendly
 structure AggregationProfile {
     type: String
     description: String

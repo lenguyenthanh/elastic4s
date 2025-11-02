@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Request to reindex documents
+@bincompatFriendly
 structure ReindexRequest {
     @required
     sourceIndexes: StringList
@@ -35,6 +38,7 @@ structure ReindexRequest {
 }
 
 /// Slice for parallel reindexing
+@bincompatFriendly
 structure Slice {
     @required
     id: Integer
@@ -44,6 +48,7 @@ structure Slice {
 }
 
 /// Response for reindex request
+@bincompatFriendly
 structure ReindexResponse {
     took: Long
 

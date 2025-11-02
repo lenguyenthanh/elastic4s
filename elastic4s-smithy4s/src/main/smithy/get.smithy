@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Request for getting a document by ID
+@bincompatFriendly
 structure GetRequest {
     @required
     index: String
@@ -23,6 +26,7 @@ structure GetRequest {
 
 /// Response for get document request
 @mixin
+@bincompatFriendly
 structure GetResponseMixin {
     @jsonName("_id")
     @required
@@ -55,6 +59,7 @@ structure GetResponse with [GetResponseMixin] {
 }
 
 /// Multi-get request
+@bincompatFriendly
 structure MultiGetRequest {
     @required
     items: GetItemList
@@ -65,6 +70,7 @@ structure MultiGetRequest {
 }
 
 /// Individual item in multi-get request
+@bincompatFriendly
 structure GetItem {
     @required
     index: String
@@ -78,6 +84,7 @@ structure GetItem {
 }
 
 /// Multi-get response
+@bincompatFriendly
 structure MultiGetResponse {
     @required
     docs: GetResponseList

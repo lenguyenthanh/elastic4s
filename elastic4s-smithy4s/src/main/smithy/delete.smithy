@@ -2,7 +2,10 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use smithy4s.meta#bincompatFriendly
+
 /// Request for deleting a document by ID
+@bincompatFriendly
 structure DeleteByIdRequest {
     @required
     index: String
@@ -20,6 +23,7 @@ structure DeleteByIdRequest {
 }
 
 /// Request for deleting documents by query
+@bincompatFriendly
 structure DeleteByQueryRequest {
     @required
     indexes: StringList
@@ -57,6 +61,7 @@ structure DeleteByQueryRequest {
 }
 
 /// Response for delete by ID request
+@bincompatFriendly
 structure DeleteResponse {
     @jsonName("_index")
     @required
@@ -86,6 +91,7 @@ structure DeleteResponse {
 }
 
 /// Response for delete by query request
+@bincompatFriendly
 structure DeleteByQueryResponse {
     took: Long
 
