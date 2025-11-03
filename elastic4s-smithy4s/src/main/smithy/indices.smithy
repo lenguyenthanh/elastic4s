@@ -86,49 +86,678 @@ enum Dynamic {
     RUNTIME = "runtime"
 }
 
-/// Property mapping
-structure Property {
-    @required
-    type: String
+/// Property mapping - Union of all Elasticsearch field data types
+@bincompatFriendly
+union Property {
+    // Text family
+    text: TextProperty
+    matchOnlyText: MatchOnlyTextProperty
+    
+    // Keyword family
+    keyword: KeywordProperty
+    constantKeyword: ConstantKeywordProperty
+    wildcard: WildcardProperty
+    
+    // Numeric family
+    long: LongProperty
+    integer: IntegerProperty
+    short: ShortProperty
+    byte: ByteProperty
+    double: DoubleProperty
+    float: FloatProperty
+    halfFloat: HalfFloatProperty
+    scaledFloat: ScaledFloatProperty
+    unsignedLong: UnsignedLongProperty
+    
+    // Date family
+    date: DateProperty
+    dateNanos: DateNanosProperty
+    
+    // Boolean
+    boolean: BooleanProperty
+    
+    // Binary
+    binary: BinaryProperty
+    
+    // Range family
+    integerRange: IntegerRangeProperty
+    floatRange: FloatRangeProperty
+    longRange: LongRangeProperty
+    doubleRange: DoubleRangeProperty
+    dateRange: DateRangeProperty
+    ipRange: IpRangeProperty
+    
+    // Object and nested
+    object: ObjectProperty
+    nested: NestedProperty
+    flattened: FlattenedProperty
+    
+    // Structured data
+    join: JoinProperty
+    
+    // Spatial
+    geoPoint: GeoPointProperty
+    geoShape: GeoShapeProperty
+    point: PointProperty
+    shape: ShapeProperty
+    
+    // IP
+    ip: IpProperty
+    
+    // Completion
+    completion: CompletionProperty
+    
+    // Token count
+    tokenCount: TokenCountProperty
+    
+    // Murmur3
+    murmur3: Murmur3Property
+    
+    // Annotated text
+    annotatedText: AnnotatedTextProperty
+    
+    // Percolator
+    percolator: PercolatorProperty
+    
+    // Rank features
+    rankFeature: RankFeatureProperty
+    rankFeatures: RankFeaturesProperty
+    
+    // Dense vector
+    denseVector: DenseVectorProperty
+    
+    // Sparse vector  
+    sparseVector: SparseVectorProperty
+    
+    // Search as you type
+    searchAsYouType: SearchAsYouTypeProperty
+    
+    // Alias
+    alias: AliasProperty
+    
+    // Histogram
+    histogram: HistogramProperty
+    
+    // Aggregate metric
+    aggregateMetricDouble: AggregateMetricDoubleProperty
+    
+    // Other types not explicitly defined
+    other: GenericProperty
+}
 
-    index: Boolean
+/// Base property fields common to most field types
+@bincompatFriendly
+structure BasePropertyFields {
+    meta: MetaMap
+    copyTo: StringList
     store: Boolean
+    index: Boolean
     docValues: Boolean
+}
 
+/// Text property
+@bincompatFriendly
+structure TextProperty {
     analyzer: String
     searchAnalyzer: String
-    normalizer: String
-
+    searchQuoteAnalyzer: String
     boost: Double
-    coerce: Boolean
-    copyTo: StringList
-
     eagerGlobalOrdinals: Boolean
-    enabled: Boolean
-
     fielddata: Boolean
+    fielddataFrequencyFilter: FielddataFrequencyFilter
     fields: PropertyMap
-
-    format: String
-    ignoreAbove: Integer
-    ignoreMalformed: Boolean
-
     indexOptions: String
     indexPhrases: Boolean
     indexPrefixes: IndexPrefixes
-
+    norms: Boolean
+    positionIncrementGap: Integer
+    similarity: String
+    termVector: String
     meta: MetaMap
+    copyTo: StringList
+    store: Boolean
+}
 
+/// Match only text property
+@bincompatFriendly
+structure MatchOnlyTextProperty {
+    fields: PropertyMap
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Keyword property  
+@bincompatFriendly
+structure KeywordProperty {
+    boost: Double
+    docValues: Boolean
+    eagerGlobalOrdinals: Boolean
+    fields: PropertyMap
+    ignoreAbove: Integer
+    index: Boolean
+    indexOptions: String
     norms: Boolean
     nullValue: String
-
-    positionIncrementGap: Integer
-    properties: PropertyMap
-
-    searchQuoteAnalyzer: String
+    store: Boolean
     similarity: String
+    normalizer: String
+    splitQueriesOnWhitespace: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
 
+/// Constant keyword property
+@bincompatFriendly
+structure ConstantKeywordProperty {
+    value: String
+    meta: MetaMap
+}
+
+/// Wildcard property
+@bincompatFriendly
+structure WildcardProperty {
+    nullValue: String
+    ignoreAbove: Integer
+    meta: MetaMap
+}
+
+/// Long property
+@bincompatFriendly
+structure LongProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Long
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Integer property
+@bincompatFriendly
+structure IntegerProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Integer
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Short property
+@bincompatFriendly
+structure ShortProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Short
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Byte property
+@bincompatFriendly
+structure ByteProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Byte
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Double property
+@bincompatFriendly
+structure DoubleProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Double
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Float property
+@bincompatFriendly
+structure FloatProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Float
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Half float property
+@bincompatFriendly
+structure HalfFloatProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Float
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Scaled float property
+@bincompatFriendly
+structure ScaledFloatProperty {
+    @required
+    scalingFactor: Double
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Double
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Unsigned long property
+@bincompatFriendly
+structure UnsignedLongProperty {
+    coerce: Boolean
+    boost: Double
+    docValues: Boolean
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: Long
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Date property
+@bincompatFriendly
+structure DateProperty {
+    boost: Double
+    docValues: Boolean
+    format: String
+    locale: String
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: String
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Date nanos property
+@bincompatFriendly
+structure DateNanosProperty {
+    boost: Double
+    docValues: Boolean
+    format: String
+    locale: String
+    ignoreMalformed: Boolean
+    index: Boolean
+    nullValue: String
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Boolean property
+@bincompatFriendly
+structure BooleanProperty {
+    boost: Double
+    docValues: Boolean
+    index: Boolean
+    nullValue: Boolean
+    store: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Binary property
+@bincompatFriendly
+structure BinaryProperty {
+    docValues: Boolean
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Integer range property
+@bincompatFriendly
+structure IntegerRangeProperty {
+    coerce: Boolean
+    boost: Double
+    index: Boolean
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Float range property
+@bincompatFriendly
+structure FloatRangeProperty {
+    coerce: Boolean
+    boost: Double
+    index: Boolean
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Long range property
+@bincompatFriendly
+structure LongRangeProperty {
+    coerce: Boolean
+    boost: Double
+    index: Boolean
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Double range property
+@bincompatFriendly
+structure DoubleRangeProperty {
+    coerce: Boolean
+    boost: Double
+    index: Boolean
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Date range property
+@bincompatFriendly
+structure DateRangeProperty {
+    coerce: Boolean
+    boost: Double
+    index: Boolean
+    store: Boolean
+    format: String
+    meta: MetaMap
+}
+
+/// IP range property
+@bincompatFriendly
+structure IpRangeProperty {
+    coerce: Boolean
+    boost: Double
+    index: Boolean
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Object property
+@bincompatFriendly
+structure ObjectProperty {
+    dynamic: Dynamic
+    enabled: Boolean
+    properties: PropertyMap
+    meta: MetaMap
+}
+
+/// Nested property
+@bincompatFriendly
+structure NestedProperty {
+    dynamic: Dynamic
+    properties: PropertyMap
+    includeInParent: Boolean
+    includeInRoot: Boolean
+    meta: MetaMap
+}
+
+/// Flattened property
+@bincompatFriendly
+structure FlattenedProperty {
+    boost: Double
+    depthLimit: Integer
+    docValues: Boolean
+    eagerGlobalOrdinals: Boolean
+    index: Boolean
+    indexOptions: String
+    nullValue: String
+    similarity: String
+    splitQueriesOnWhitespace: Boolean
+    meta: MetaMap
+}
+
+/// Join property
+@bincompatFriendly
+structure JoinProperty {
+    relations: JoinRelationsMap
+    eagerGlobalOrdinals: Boolean
+    meta: MetaMap
+}
+
+/// Geo point property
+@bincompatFriendly
+structure GeoPointProperty {
+    ignoreMalformed: Boolean
+    ignoreZValue: Boolean
+    nullValue: String
+    meta: MetaMap
+}
+
+/// Geo shape property
+@bincompatFriendly
+structure GeoShapeProperty {
+    orientation: String
+    ignoreMalformed: Boolean
+    ignoreZValue: Boolean
+    coerce: Boolean
+    meta: MetaMap
+}
+
+/// Point property
+@bincompatFriendly
+structure PointProperty {
+    ignoreMalformed: Boolean
+    ignoreZValue: Boolean
+    nullValue: String
+    meta: MetaMap
+}
+
+/// Shape property
+@bincompatFriendly
+structure ShapeProperty {
+    orientation: String
+    ignoreMalformed: Boolean
+    ignoreZValue: Boolean
+    coerce: Boolean
+    meta: MetaMap
+}
+
+/// IP property
+@bincompatFriendly
+structure IpProperty {
+    boost: Double
+    docValues: Boolean
+    index: Boolean
+    nullValue: String
+    store: Boolean
+    ignoreMalformed: Boolean
+    meta: MetaMap
+    copyTo: StringList
+}
+
+/// Completion property
+@bincompatFriendly
+structure CompletionProperty {
+    analyzer: String
+    searchAnalyzer: String
+    preserveSeparators: Boolean
+    preservePositionIncrements: Boolean
+    maxInputLength: Integer
+    contexts: ContextList
+    meta: MetaMap
+}
+
+/// Token count property
+@bincompatFriendly
+structure TokenCountProperty {
+    @required
+    analyzer: String
+    enablePositionIncrements: Boolean
+    boost: Double
+    docValues: Boolean
+    index: Boolean
+    nullValue: Integer
+    store: Boolean
+    meta: MetaMap
+}
+
+/// Murmur3 property
+@bincompatFriendly
+structure Murmur3Property {
+    meta: MetaMap
+}
+
+/// Annotated text property
+@bincompatFriendly
+structure AnnotatedTextProperty {
+    analyzer: String
+    searchAnalyzer: String
+    searchQuoteAnalyzer: String
+    meta: MetaMap
+}
+
+/// Percolator property
+@bincompatFriendly
+structure PercolatorProperty {
+    meta: MetaMap
+}
+
+/// Rank feature property
+@bincompatFriendly
+structure RankFeatureProperty {
+    positiveScoreImpact: Boolean
+    meta: MetaMap
+}
+
+/// Rank features property
+@bincompatFriendly
+structure RankFeaturesProperty {
+    positiveScoreImpact: Boolean
+    meta: MetaMap
+}
+
+/// Dense vector property
+@bincompatFriendly
+structure DenseVectorProperty {
+    @required
+    dims: Integer
+    index: Boolean
+    similarity: String
+    indexOptions: DenseVectorIndexOptions
+    meta: MetaMap
+}
+
+/// Sparse vector property
+@bincompatFriendly
+structure SparseVectorProperty {
+    meta: MetaMap
+}
+
+/// Search as you type property
+@bincompatFriendly
+structure SearchAsYouTypeProperty {
+    analyzer: String
+    searchAnalyzer: String
+    searchQuoteAnalyzer: String
+    maxShingleSize: Integer
     termVector: String
+    meta: MetaMap
+}
+
+/// Alias property
+@bincompatFriendly
+structure AliasProperty {
+    @required
+    path: String
+    meta: MetaMap
+}
+
+/// Histogram property
+@bincompatFriendly
+structure HistogramProperty {
+    ignoreMalformed: Boolean
+    meta: MetaMap
+}
+
+/// Aggregate metric double property
+@bincompatFriendly
+structure AggregateMetricDoubleProperty {
+    @required
+    metrics: StringList
+    @required
+    defaultMetric: String
+    meta: MetaMap
+}
+
+/// Generic property for types not explicitly defined
+@bincompatFriendly
+structure GenericProperty {
+    @required
+    type: String
+    
+    // Common fields that might be used
+    properties: PropertyMap
+    fields: PropertyMap
+    enabled: Boolean
+    dynamic: Dynamic
+    
+    // Additional arbitrary configuration
+    config: Document
+    meta: MetaMap
+}
+
+/// Fielddata frequency filter
+@bincompatFriendly
+structure FielddataFrequencyFilter {
+    min: Double
+    max: Double
+    minSegmentSize: Integer
+}
+
+/// Dense vector index options
+@bincompatFriendly
+structure DenseVectorIndexOptions {
+    type: String
+    m: Integer
+    efConstruction: Integer
+}
+
+/// Context for completion suggester
+@bincompatFriendly
+structure Context {
+    @required
+    name: String
+    @required
+    type: String
+    path: String
+    precision: String
+}
+
+list ContextList {
+    member: Context
+}
+
+map JoinRelationsMap {
+    key: String
+    value: StringList
 }
 
 /// Index prefixes settings
