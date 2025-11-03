@@ -87,7 +87,7 @@ enum Dynamic {
 }
 
 /// Property mapping - Union of all Elasticsearch field data types
-@bincompatFriendly
+
 union Property {
     // Text family
     text: TextProperty
@@ -186,7 +186,7 @@ union Property {
 }
 
 /// Base property fields common to most field types
-@bincompatFriendly
+
 structure BasePropertyFields {
     meta: MetaMap
     copyTo: StringList
@@ -195,8 +195,9 @@ structure BasePropertyFields {
     docValues: Boolean
 }
 
-/// Text property
-@bincompatFriendly
+/// Text field type for full-text search
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/text
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/text")
 structure TextProperty {
     analyzer: String
     searchAnalyzer: String
@@ -218,16 +219,18 @@ structure TextProperty {
     store: Boolean
 }
 
-/// Match only text property
-@bincompatFriendly
+/// Match only text field type optimized for search-only use cases
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/match-only-text
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/match-only-text")
 structure MatchOnlyTextProperty {
     fields: PropertyMap
     meta: MetaMap
     copyTo: StringList
 }
 
-/// Keyword property  
-@bincompatFriendly
+/// Keyword field type for structured content
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/keyword
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/keyword")
 structure KeywordProperty {
     boost: Double
     docValues: Boolean
@@ -246,23 +249,26 @@ structure KeywordProperty {
     copyTo: StringList
 }
 
-/// Constant keyword property
-@bincompatFriendly
+/// Constant keyword field type for fields that always contain the same value
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/constant-keyword
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/constant-keyword")
 structure ConstantKeywordProperty {
     value: String
     meta: MetaMap
 }
 
-/// Wildcard property
-@bincompatFriendly
+/// Wildcard field type for wildcard pattern matching
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/wildcard
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/wildcard")
 structure WildcardProperty {
     nullValue: String
     ignoreAbove: Integer
     meta: MetaMap
 }
 
-/// Long property
-@bincompatFriendly
+/// Long numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure LongProperty {
     coerce: Boolean
     boost: Double
@@ -275,8 +281,9 @@ structure LongProperty {
     copyTo: StringList
 }
 
-/// Integer property
-@bincompatFriendly
+/// Integer numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure IntegerProperty {
     coerce: Boolean
     boost: Double
@@ -289,8 +296,9 @@ structure IntegerProperty {
     copyTo: StringList
 }
 
-/// Short property
-@bincompatFriendly
+/// Short numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure ShortProperty {
     coerce: Boolean
     boost: Double
@@ -303,8 +311,9 @@ structure ShortProperty {
     copyTo: StringList
 }
 
-/// Byte property
-@bincompatFriendly
+/// Byte numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure ByteProperty {
     coerce: Boolean
     boost: Double
@@ -317,8 +326,9 @@ structure ByteProperty {
     copyTo: StringList
 }
 
-/// Double property
-@bincompatFriendly
+/// Double numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure DoubleProperty {
     coerce: Boolean
     boost: Double
@@ -331,8 +341,9 @@ structure DoubleProperty {
     copyTo: StringList
 }
 
-/// Float property
-@bincompatFriendly
+/// Float numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure FloatProperty {
     coerce: Boolean
     boost: Double
@@ -345,8 +356,9 @@ structure FloatProperty {
     copyTo: StringList
 }
 
-/// Half float property
-@bincompatFriendly
+/// Half float numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure HalfFloatProperty {
     coerce: Boolean
     boost: Double
@@ -359,8 +371,9 @@ structure HalfFloatProperty {
     copyTo: StringList
 }
 
-/// Scaled float property
-@bincompatFriendly
+/// Scaled float numeric field type for floating point with fixed scaling factor
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure ScaledFloatProperty {
     @required
     scalingFactor: Double
@@ -375,8 +388,9 @@ structure ScaledFloatProperty {
     copyTo: StringList
 }
 
-/// Unsigned long property
-@bincompatFriendly
+/// Unsigned long numeric field type
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/number")
 structure UnsignedLongProperty {
     coerce: Boolean
     boost: Double
@@ -389,8 +403,9 @@ structure UnsignedLongProperty {
     copyTo: StringList
 }
 
-/// Date property
-@bincompatFriendly
+/// Date field type for date values
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/date
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/date")
 structure DateProperty {
     boost: Double
     docValues: Boolean
@@ -404,8 +419,9 @@ structure DateProperty {
     copyTo: StringList
 }
 
-/// Date nanos property
-@bincompatFriendly
+/// Date nanos field type for high precision date values
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/date_nanos
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/date_nanos")
 structure DateNanosProperty {
     boost: Double
     docValues: Boolean
@@ -419,8 +435,9 @@ structure DateNanosProperty {
     copyTo: StringList
 }
 
-/// Boolean property
-@bincompatFriendly
+/// Boolean field type for true/false values
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/boolean
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/boolean")
 structure BooleanProperty {
     boost: Double
     docValues: Boolean
@@ -431,8 +448,9 @@ structure BooleanProperty {
     copyTo: StringList
 }
 
-/// Binary property
-@bincompatFriendly
+/// Binary field type for binary data
+/// See: https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/binary
+@externalDocumentation(url: "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/binary")
 structure BinaryProperty {
     docValues: Boolean
     store: Boolean
@@ -440,7 +458,7 @@ structure BinaryProperty {
 }
 
 /// Integer range property
-@bincompatFriendly
+
 structure IntegerRangeProperty {
     coerce: Boolean
     boost: Double
@@ -450,7 +468,7 @@ structure IntegerRangeProperty {
 }
 
 /// Float range property
-@bincompatFriendly
+
 structure FloatRangeProperty {
     coerce: Boolean
     boost: Double
@@ -460,7 +478,7 @@ structure FloatRangeProperty {
 }
 
 /// Long range property
-@bincompatFriendly
+
 structure LongRangeProperty {
     coerce: Boolean
     boost: Double
@@ -470,7 +488,7 @@ structure LongRangeProperty {
 }
 
 /// Double range property
-@bincompatFriendly
+
 structure DoubleRangeProperty {
     coerce: Boolean
     boost: Double
@@ -480,7 +498,7 @@ structure DoubleRangeProperty {
 }
 
 /// Date range property
-@bincompatFriendly
+
 structure DateRangeProperty {
     coerce: Boolean
     boost: Double
@@ -491,7 +509,7 @@ structure DateRangeProperty {
 }
 
 /// IP range property
-@bincompatFriendly
+
 structure IpRangeProperty {
     coerce: Boolean
     boost: Double
@@ -501,7 +519,7 @@ structure IpRangeProperty {
 }
 
 /// Object property
-@bincompatFriendly
+
 structure ObjectProperty {
     dynamic: Dynamic
     enabled: Boolean
@@ -510,7 +528,7 @@ structure ObjectProperty {
 }
 
 /// Nested property
-@bincompatFriendly
+
 structure NestedProperty {
     dynamic: Dynamic
     properties: PropertyMap
@@ -520,7 +538,7 @@ structure NestedProperty {
 }
 
 /// Flattened property
-@bincompatFriendly
+
 structure FlattenedProperty {
     boost: Double
     depthLimit: Integer
@@ -535,7 +553,7 @@ structure FlattenedProperty {
 }
 
 /// Join property
-@bincompatFriendly
+
 structure JoinProperty {
     relations: JoinRelationsMap
     eagerGlobalOrdinals: Boolean
@@ -543,7 +561,7 @@ structure JoinProperty {
 }
 
 /// Geo point property
-@bincompatFriendly
+
 structure GeoPointProperty {
     ignoreMalformed: Boolean
     ignoreZValue: Boolean
@@ -552,7 +570,7 @@ structure GeoPointProperty {
 }
 
 /// Geo shape property
-@bincompatFriendly
+
 structure GeoShapeProperty {
     orientation: String
     ignoreMalformed: Boolean
@@ -562,7 +580,7 @@ structure GeoShapeProperty {
 }
 
 /// Point property
-@bincompatFriendly
+
 structure PointProperty {
     ignoreMalformed: Boolean
     ignoreZValue: Boolean
@@ -571,7 +589,7 @@ structure PointProperty {
 }
 
 /// Shape property
-@bincompatFriendly
+
 structure ShapeProperty {
     orientation: String
     ignoreMalformed: Boolean
@@ -581,7 +599,7 @@ structure ShapeProperty {
 }
 
 /// IP property
-@bincompatFriendly
+
 structure IpProperty {
     boost: Double
     docValues: Boolean
@@ -594,7 +612,7 @@ structure IpProperty {
 }
 
 /// Completion property
-@bincompatFriendly
+
 structure CompletionProperty {
     analyzer: String
     searchAnalyzer: String
@@ -606,7 +624,7 @@ structure CompletionProperty {
 }
 
 /// Token count property
-@bincompatFriendly
+
 structure TokenCountProperty {
     @required
     analyzer: String
@@ -620,13 +638,13 @@ structure TokenCountProperty {
 }
 
 /// Murmur3 property
-@bincompatFriendly
+
 structure Murmur3Property {
     meta: MetaMap
 }
 
 /// Annotated text property
-@bincompatFriendly
+
 structure AnnotatedTextProperty {
     analyzer: String
     searchAnalyzer: String
@@ -635,27 +653,27 @@ structure AnnotatedTextProperty {
 }
 
 /// Percolator property
-@bincompatFriendly
+
 structure PercolatorProperty {
     meta: MetaMap
 }
 
 /// Rank feature property
-@bincompatFriendly
+
 structure RankFeatureProperty {
     positiveScoreImpact: Boolean
     meta: MetaMap
 }
 
 /// Rank features property
-@bincompatFriendly
+
 structure RankFeaturesProperty {
     positiveScoreImpact: Boolean
     meta: MetaMap
 }
 
 /// Dense vector property
-@bincompatFriendly
+
 structure DenseVectorProperty {
     @required
     dims: Integer
@@ -666,13 +684,13 @@ structure DenseVectorProperty {
 }
 
 /// Sparse vector property
-@bincompatFriendly
+
 structure SparseVectorProperty {
     meta: MetaMap
 }
 
 /// Search as you type property
-@bincompatFriendly
+
 structure SearchAsYouTypeProperty {
     analyzer: String
     searchAnalyzer: String
@@ -683,7 +701,7 @@ structure SearchAsYouTypeProperty {
 }
 
 /// Alias property
-@bincompatFriendly
+
 structure AliasProperty {
     @required
     path: String
@@ -691,14 +709,14 @@ structure AliasProperty {
 }
 
 /// Histogram property
-@bincompatFriendly
+
 structure HistogramProperty {
     ignoreMalformed: Boolean
     meta: MetaMap
 }
 
 /// Aggregate metric double property
-@bincompatFriendly
+
 structure AggregateMetricDoubleProperty {
     @required
     metrics: StringList
@@ -708,7 +726,7 @@ structure AggregateMetricDoubleProperty {
 }
 
 /// Generic property for types not explicitly defined
-@bincompatFriendly
+
 structure GenericProperty {
     @required
     type: String
@@ -725,7 +743,7 @@ structure GenericProperty {
 }
 
 /// Fielddata frequency filter
-@bincompatFriendly
+
 structure FielddataFrequencyFilter {
     min: Double
     max: Double
@@ -733,7 +751,7 @@ structure FielddataFrequencyFilter {
 }
 
 /// Dense vector index options
-@bincompatFriendly
+
 structure DenseVectorIndexOptions {
     type: String
     m: Integer
@@ -741,7 +759,7 @@ structure DenseVectorIndexOptions {
 }
 
 /// Context for completion suggester
-@bincompatFriendly
+
 structure Context {
     @required
     name: String
