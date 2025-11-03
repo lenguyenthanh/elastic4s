@@ -2,6 +2,8 @@ $version: "2"
 
 namespace se.thanh.elastic4cats
 
+use alloy#untagged
+
 /// Request to create an index
 structure CreateIndexRequest {
     @required
@@ -88,6 +90,7 @@ enum Dynamic {
 
 /// Property mapping - Union of all Elasticsearch field data types
 
+@untagged
 union Property {
     // Text family
     text: TextProperty
