@@ -1,8 +1,7 @@
 $version: "2"
 
 namespace se.thanh.elastic4cats
-
-use alloy#untagged
+use alloy#discriminated
 
 /// Request to create an index
 structure CreateIndexRequest {
@@ -90,17 +89,19 @@ enum Dynamic {
 
 /// Property mapping - Union of all Elasticsearch field data types
 
-@untagged
+@discriminated("type")
 union Property {
     // Text family
     text: TextProperty
+
+    @jsonName("match_only_text")
     matchOnlyText: MatchOnlyTextProperty
-    
+
     // Keyword family
     keyword: KeywordProperty
     constantKeyword: ConstantKeywordProperty
     wildcard: WildcardProperty
-    
+
     // Numeric family
     long: LongProperty
     integer: IntegerProperty
@@ -111,17 +112,17 @@ union Property {
     halfFloat: HalfFloatProperty
     scaledFloat: ScaledFloatProperty
     unsignedLong: UnsignedLongProperty
-    
+
     // Date family
     date: DateProperty
     dateNanos: DateNanosProperty
-    
+
     // Boolean
     boolean: BooleanProperty
-    
+
     // Binary
     binary: BinaryProperty
-    
+
     // Range family
     integerRange: IntegerRangeProperty
     floatRange: FloatRangeProperty
@@ -129,63 +130,63 @@ union Property {
     doubleRange: DoubleRangeProperty
     dateRange: DateRangeProperty
     ipRange: IpRangeProperty
-    
+
     // Object and nested
     object: ObjectProperty
     nested: NestedProperty
     flattened: FlattenedProperty
-    
+
     // Structured data
     join: JoinProperty
-    
+
     // Spatial
     geoPoint: GeoPointProperty
     geoShape: GeoShapeProperty
     point: PointProperty
     shape: ShapeProperty
-    
+
     // IP
     ip: IpProperty
-    
+
     // Completion
     completion: CompletionProperty
-    
+
     // Token count
     tokenCount: TokenCountProperty
-    
+
     // Murmur3
     murmur3: Murmur3Property
-    
+
     // Annotated text
     annotatedText: AnnotatedTextProperty
-    
+
     // Percolator
     percolator: PercolatorProperty
-    
+
     // Rank features
     rankFeature: RankFeatureProperty
     rankFeatures: RankFeaturesProperty
-    
+
     // Dense vector
     denseVector: DenseVectorProperty
-    
-    // Sparse vector  
+
+    // Sparse vector
     sparseVector: SparseVectorProperty
-    
+
     // Search as you type
     searchAsYouType: SearchAsYouTypeProperty
-    
+
     // Alias
     alias: AliasProperty
-    
+
     // Histogram
     histogram: HistogramProperty
-    
+
     // Aggregate metric
     aggregateMetricDouble: AggregateMetricDoubleProperty
-    
+
     // Other types not explicitly defined
-    other: GenericProperty
+    // other: GenericProperty
 }
 
 /// Base property fields common to most field types
@@ -731,15 +732,15 @@ structure AggregateMetricDoubleProperty {
 /// Generic property for types not explicitly defined
 
 structure GenericProperty {
-    @required
-    type: String
-    
+    // @required
+    // type: String
+
     // Common fields that might be used
     properties: PropertyMap
     fields: PropertyMap
     enabled: Boolean
     dynamic: Dynamic
-    
+
     // Additional arbitrary configuration
     config: Document
     meta: MetaMap
